@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "ICICIBANK",
+      "score_blend": 62.5,
+      "blend_score": 62.5,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 65.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:04:38.564205Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1404.3,
+      "current_price": 1404.3,
+      "prev_close": 1404.3,
+      "intraday_change_pct": -1.6,
+      "open": 1427.1,
+      "high": 1429.5,
+      "low": 1401.5,
+      "volume": 12555063,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (65%); bullish options activity (58%)",
+      "strategy_rationale": "ICICIBANK presents a buy opportunity with 62.5% confidence. Market Regime signal at 75% supports this view.",
+      "value_bucket": "Open"
+    }
+  ],
+  "as_of": "2026-01-09T20:04:07.259499",
+  "universe": "banknifty",
+  "mode": "Futures",
+  "elapsed_seconds": 30.046926,
+  "policy_version": "1.0",
+  "run_id": "banknifty:Futures:2026-01-09T14:34:39.642024"
+}

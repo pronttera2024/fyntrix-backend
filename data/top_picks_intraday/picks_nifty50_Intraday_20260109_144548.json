@@ -1,0 +1,309 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "TATACONSUM",
+      "score_blend": 60.9,
+      "blend_score": 60.9,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Volume Breakout (Bullish): ",
+      "rationale": "Volume Breakout (Bullish): ",
+      "scores": {
+        "pattern_recognition": 67.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Volume Breakout (Bullish)",
+          "direction": "BULLISH",
+          "confidence": 82,
+          "description": "Strong volume breakout above resistance",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:15:45.821660Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1175.9,
+      "current_price": 1175.9,
+      "prev_close": 1175.9,
+      "intraday_change_pct": -1.79,
+      "open": 1197.3,
+      "high": 1207.8,
+      "low": 1173.8,
+      "volume": 555444,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (67%); bullish options activity (58%)",
+      "strategy_rationale": "TATACONSUM presents a buy opportunity with 60.9% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 2,
+      "symbol": "M&M",
+      "score_blend": 60.9,
+      "blend_score": 60.9,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 67.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Bullish AB=CD",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Equal legs pattern - continuation likely",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:15:45.821892Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 3677.3,
+      "current_price": 3677.3,
+      "prev_close": 3677.3,
+      "intraday_change_pct": -0.94,
+      "open": 3712.1,
+      "high": 3748.5,
+      "low": 3667.1,
+      "volume": 1235825,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (67%); bullish options activity (58%)",
+      "strategy_rationale": "M&M presents a buy opportunity with 60.9% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 3,
+      "symbol": "POWERGRID",
+      "score_blend": 60.2,
+      "blend_score": 60.2,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 64.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:15:45.822003Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 258.0,
+      "current_price": 258.0,
+      "prev_close": 258.0,
+      "intraday_change_pct": -0.88,
+      "open": 260.3,
+      "high": 263.8,
+      "low": 256.25,
+      "volume": 14100627,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (64%); bullish options activity (58%)",
+      "strategy_rationale": "POWERGRID presents a buy opportunity with 60.2% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 4,
+      "symbol": "ICICIBANK",
+      "score_blend": 43.1,
+      "blend_score": 43.1,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 44.0,
+        "market_regime": 25.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Bullish AB=CD",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Equal legs pattern - continuation likely",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:15:45.822044Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1404.3,
+      "current_price": 1404.3,
+      "prev_close": 1404.3,
+      "intraday_change_pct": -1.6,
+      "open": 1427.1,
+      "high": 1429.5,
+      "low": 1401.5,
+      "volume": 12555063,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); bullish chart patterns detected (44%); favorable market conditions (25%)",
+      "strategy_rationale": "ICICIBANK presents a sell opportunity with 43.1% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    }
+  ],
+  "as_of": "2026-01-09T20:14:00.367264",
+  "universe": "nifty50",
+  "mode": "Intraday",
+  "elapsed_seconds": 94.665281,
+  "policy_version": "1.0",
+  "run_id": "nifty50:Intraday:2026-01-09T14:45:48.822353"
+}

@@ -1,0 +1,385 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "RELIANCE",
+      "score_blend": 62.1,
+      "blend_score": 62.1,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Inverse Head & Shoulders: ",
+      "rationale": "Inverse Head & Shoulders: ",
+      "scores": {
+        "pattern_recognition": 73.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Inverse Head & Shoulders",
+          "direction": "BULLISH",
+          "confidence": 78.50627643663103,
+          "description": "Bullish inverse H&S with neckline at 6895.94",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:16:06.320388Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1475.3,
+      "current_price": 1475.3,
+      "prev_close": 1475.3,
+      "intraday_change_pct": 0.7,
+      "open": 1465.0,
+      "high": 1479.9,
+      "low": 1465.0,
+      "volume": 8333071,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (73%); bullish options activity (58%)",
+      "strategy_rationale": "RELIANCE presents a buy opportunity with 62.1% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "High"
+    },
+    {
+      "rank": 2,
+      "symbol": "ULTRACEMCO",
+      "score_blend": 60.2,
+      "blend_score": 60.2,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 64.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:16:06.320471Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 11937.0,
+      "current_price": 11937.0,
+      "prev_close": 11937.0,
+      "intraday_change_pct": -1.0,
+      "open": 12058.0,
+      "high": 12065.0,
+      "low": 11852.0,
+      "volume": 263822,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (64%); bullish options activity (58%)",
+      "strategy_rationale": "ULTRACEMCO presents a buy opportunity with 60.2% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 3,
+      "symbol": "COALINDIA",
+      "score_blend": 60.2,
+      "blend_score": 60.2,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Volume Breakdown (Bearish): ",
+      "rationale": "Volume Breakdown (Bearish): ",
+      "scores": {
+        "pattern_recognition": 64.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Volume Breakdown (Bearish)",
+          "direction": "BEARISH",
+          "confidence": 82,
+          "description": "Strong volume breakdown below support",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:16:06.320496Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 418.35,
+      "current_price": 418.35,
+      "prev_close": 418.35,
+      "intraday_change_pct": -1.26,
+      "open": 423.7,
+      "high": 428.35,
+      "low": 417.2,
+      "volume": 7304727,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (64%); bullish options activity (58%)",
+      "strategy_rationale": "COALINDIA presents a buy opportunity with 60.2% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 4,
+      "symbol": "JSWSTEEL",
+      "score_blend": 60.2,
+      "blend_score": 60.2,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 64.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:16:06.320516Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1158.8,
+      "current_price": 1158.8,
+      "prev_close": 1158.8,
+      "intraday_change_pct": -0.1,
+      "open": 1160.0,
+      "high": 1170.7,
+      "low": 1154.4,
+      "volume": 1387304,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (64%); bullish options activity (58%)",
+      "strategy_rationale": "JSWSTEEL presents a buy opportunity with 60.2% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 5,
+      "symbol": "BRITANNIA",
+      "score_blend": 44.3,
+      "blend_score": 44.3,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 39.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Inverse Head & Shoulders",
+          "direction": "BULLISH",
+          "confidence": 76.44933197906086,
+          "description": "Bullish inverse H&S with neckline at 1697.86",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 2,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:16:06.320538Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "LowVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 5977.5,
+      "current_price": 5977.5,
+      "prev_close": 5977.5,
+      "intraday_change_pct": -0.93,
+      "open": 6033.5,
+      "high": 6106.5,
+      "low": 5930.0,
+      "volume": 139763,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (39%)",
+      "strategy_rationale": "BRITANNIA presents a sell opportunity with 44.3% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    }
+  ],
+  "as_of": "2026-01-09T20:14:34.765817",
+  "universe": "nifty50",
+  "mode": "Intraday",
+  "elapsed_seconds": 90.05039,
+  "policy_version": "1.0",
+  "run_id": "nifty50:Intraday:2026-01-09T14:46:10.340830"
+}

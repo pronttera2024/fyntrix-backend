@@ -1,0 +1,86 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "IDFCFIRSTB",
+      "score_blend": 62.8,
+      "blend_score": 62.8,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 79.0,
+        "market_regime": 75.0,
+        "options": 57.5,
+        "sentiment": 50.0,
+        "watchlist_intelligence": 50.0,
+        "trade_strategy": 50.0
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Bullish AB=CD",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Equal legs pattern - continuation likely",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 3,
+        "bearish": 0,
+        "neutral": 4,
+        "total_agents": 6
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:05:27.817948Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 86.0,
+      "current_price": 86.0,
+      "prev_close": 86.0,
+      "intraday_change_pct": 0.12,
+      "open": 85.9,
+      "high": 86.79,
+      "low": 85.07,
+      "volume": 31024146,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish chart patterns detected (79%); favorable market conditions (75%); bullish options activity (58%)",
+      "strategy_rationale": "IDFCFIRSTB presents a buy opportunity with 62.8% confidence. Pattern Recognition signal at 79% supports this view.",
+      "value_bucket": "High"
+    }
+  ],
+  "as_of": "2026-01-09T20:04:57.765558",
+  "universe": "banknifty",
+  "mode": "Swing",
+  "elapsed_seconds": 30.050531,
+  "policy_version": "1.0",
+  "run_id": "banknifty:Swing:2026-01-09T14:35:28.292371"
+}

@@ -1,0 +1,385 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "TCS",
+      "score_blend": 62.5,
+      "blend_score": 62.5,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 75.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Bullish AB=CD",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Equal legs pattern - continuation likely",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:58:18.493316Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 3207.8,
+      "current_price": 3207.8,
+      "prev_close": 3207.8,
+      "intraday_change_pct": 0.53,
+      "open": 3191.0,
+      "high": 3229.7,
+      "low": 3191.0,
+      "volume": 1938293,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish chart patterns detected (75%); favorable market conditions (75%); bullish options activity (58%)",
+      "strategy_rationale": "TCS presents a buy opportunity with 62.5% confidence. Pattern Recognition signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 2,
+      "symbol": "WIPRO",
+      "score_blend": 61.9,
+      "blend_score": 61.9,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 72.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:58:18.493560Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 261.95,
+      "current_price": 261.95,
+      "prev_close": 261.95,
+      "intraday_change_pct": 0.23,
+      "open": 261.35,
+      "high": 263.95,
+      "low": 260.45,
+      "volume": 4734616,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (72%); bullish options activity (58%)",
+      "strategy_rationale": "WIPRO presents a buy opportunity with 61.9% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 3,
+      "symbol": "HDFCLIFE",
+      "score_blend": 60.3,
+      "blend_score": 60.3,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 67.0,
+        "market_regime": 72.5,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:58:18.493598Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "HighVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 749.9,
+      "current_price": 749.9,
+      "prev_close": 749.9,
+      "intraday_change_pct": -1.09,
+      "open": 758.2,
+      "high": 760.75,
+      "low": 747.7,
+      "volume": 3267650,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (72%); bullish chart patterns detected (67%); bullish options activity (58%)",
+      "strategy_rationale": "HDFCLIFE presents a buy opportunity with 60.3% confidence. Market Regime signal at 72% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 4,
+      "symbol": "BPCL",
+      "score_blend": 43.6,
+      "blend_score": 43.6,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 36.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 2,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:58:18.493618Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 354.15,
+      "current_price": 354.15,
+      "prev_close": 354.15,
+      "intraday_change_pct": 0.33,
+      "open": 353.0,
+      "high": 359.65,
+      "low": 352.2,
+      "volume": 5252007,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (36%)",
+      "strategy_rationale": "BPCL presents a sell opportunity with 43.6% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 5,
+      "symbol": "SUNPHARMA",
+      "score_blend": 40.9,
+      "blend_score": 40.9,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 38.0,
+        "market_regime": 25.0,
+        "sentiment": 40.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 3,
+        "neutral": 1,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:58:18.493642Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1729.9,
+      "current_price": 1729.9,
+      "prev_close": 1729.9,
+      "intraday_change_pct": -2.0,
+      "open": 1765.2,
+      "high": 1765.2,
+      "low": 1727.0,
+      "volume": 1585603,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (40%); bullish chart patterns detected (38%)",
+      "strategy_rationale": "SUNPHARMA presents a sell opportunity with 40.9% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    }
+  ],
+  "as_of": "2026-01-09T19:56:26.097643",
+  "universe": "nifty50",
+  "mode": "Intraday",
+  "elapsed_seconds": 108.896088,
+  "policy_version": "1.0",
+  "run_id": "nifty50:Intraday:2026-01-09T14:28:23.933306"
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "what-is-fyntrix",
+    "patterns": [
+      "what is fyntrix",
+      "fyntrix app",
+      "about fyntrix",
+      "fyntrix platform"
+    ],
+    "answer": "Fyntrix is ARISE's AI research and trade-strategy layer. I combine 10+ agents (technical, sentiment, macro, options, regime, risk and more) with live data, news and your preferences to turn raw market information into clear, actionable ideas.",
+    "suggestions": [
+      "Show me today's top picks",
+      "Analyze RELIANCE",
+      "How do you score stocks?"
+    ]
+  },
+  {
+    "id": "what-is-rsi",
+    "patterns": [
+      "what is rsi",
+      "explain rsi",
+      "relative strength index"
+    ],
+    "answer": "RSI (Relative Strength Index) is a momentum oscillator that ranges from 0–100 and compares recent gains vs losses. In practice, readings above ~70 often signal overbought strength that can cool off, while below ~30 suggests oversold weakness that may stabilise. I don’t use RSI alone – I combine it with trend, support/resistance and volume before taking a stance.",
+    "suggestions": [
+      "Show me a stock with high RSI",
+      "How do you use RSI in your top picks?",
+      "What is MACD?"
+    ]
+  },
+  {
+    "id": "intraday-vs-swing",
+    "patterns": [
+      "intraday vs swing",
+      "difference between intraday and swing",
+      "should I trade intraday or swing"
+    ],
+    "answer": "Intraday trades are opened and closed the same day, focusing on short, high-liquidity moves and tighter risk control. Swing trades usually hold for a few days to weeks, riding broader moves between support and resistance. I’ll suggest more selective, slower ideas if you prefer swing, and faster, tighter setups if you set your profile to Intraday/Scalping.",
+    "suggestions": [
+      "Set my profile for Intraday",
+      "Set my profile for Swing",
+      "Show top picks for my style"
+    ]
+  }
+]

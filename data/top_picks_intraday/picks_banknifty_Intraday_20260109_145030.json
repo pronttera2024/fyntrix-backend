@@ -1,0 +1,454 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "PNB",
+      "score_blend": 61.6,
+      "blend_score": 61.6,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Head & Shoulders: ",
+      "rationale": "Head & Shoulders: ",
+      "scores": {
+        "pattern_recognition": 55.0,
+        "market_regime": 73.25,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Head & Shoulders",
+          "direction": "BEARISH",
+          "confidence": 78.60666211840638,
+          "description": "Bearish H&S pattern with neckline at 1746.27",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 3,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:20:18.793692Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "HighVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 122.9,
+      "current_price": 122.9,
+      "prev_close": 122.9,
+      "intraday_change_pct": -0.08,
+      "open": 123.0,
+      "high": 124.84,
+      "low": 122.24,
+      "volume": 13020147,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (73%); bullish options activity (58%); bullish chart patterns detected (55%)",
+      "strategy_rationale": "PNB presents a buy opportunity with 61.6% confidence. Market Regime signal at 73% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 2,
+      "symbol": "HDFCBANK",
+      "score_blend": 61.2,
+      "blend_score": 61.2,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 52.0,
+        "market_regime": 75.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 3,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:20:18.793802Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 939.0,
+      "current_price": 939.0,
+      "prev_close": 939.0,
+      "intraday_change_pct": -0.63,
+      "open": 945.0,
+      "high": 950.6,
+      "low": 933.3,
+      "volume": 38182528,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish options activity (58%); bullish chart patterns detected (52%)",
+      "strategy_rationale": "HDFCBANK presents a buy opportunity with 61.2% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 3,
+      "symbol": "BANKBARODA",
+      "score_blend": 60.9,
+      "blend_score": 60.9,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 51.0,
+        "market_regime": 75.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 3,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:20:18.793821Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 300.65,
+      "current_price": 300.65,
+      "prev_close": 300.65,
+      "intraday_change_pct": 0.37,
+      "open": 299.55,
+      "high": 305.5,
+      "low": 297.3,
+      "volume": 10209818,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish options activity (58%); bullish chart patterns detected (51%)",
+      "strategy_rationale": "BANKBARODA presents a buy opportunity with 60.9% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 4,
+      "symbol": "ICICIBANK",
+      "score_blend": 44.1,
+      "blend_score": 44.1,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 47.0,
+        "market_regime": 25.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:20:18.793890Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1404.3,
+      "current_price": 1404.3,
+      "prev_close": 1404.3,
+      "intraday_change_pct": -1.6,
+      "open": 1427.1,
+      "high": 1429.5,
+      "low": 1401.5,
+      "volume": 12555063,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); bullish chart patterns detected (47%); favorable market conditions (25%)",
+      "strategy_rationale": "ICICIBANK presents a sell opportunity with 44.1% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 5,
+      "symbol": "FEDERALBNK",
+      "score_blend": 44.1,
+      "blend_score": 44.1,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Volume Breakout (Bullish): ",
+      "rationale": "Volume Breakout (Bullish): ",
+      "scores": {
+        "pattern_recognition": 47.0,
+        "market_regime": 25.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Volume Breakout (Bullish)",
+          "direction": "BULLISH",
+          "confidence": 82,
+          "description": "Strong volume breakout above resistance",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:20:18.793902Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 255.3,
+      "current_price": 255.3,
+      "prev_close": 255.3,
+      "intraday_change_pct": -0.1,
+      "open": 255.55,
+      "high": 258.45,
+      "low": 254.5,
+      "volume": 4731917,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); bullish chart patterns detected (47%); favorable market conditions (25%)",
+      "strategy_rationale": "FEDERALBNK presents a sell opportunity with 44.1% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 6,
+      "symbol": "KOTAKBANK",
+      "score_blend": 43.8,
+      "blend_score": 43.8,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 46.0,
+        "market_regime": 25.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 2,
+        "total_agents": 3
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:20:18.793914Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 2126.8,
+      "current_price": 2126.8,
+      "prev_close": 2126.8,
+      "intraday_change_pct": -0.29,
+      "open": 2133.0,
+      "high": 2133.0,
+      "low": 2116.0,
+      "volume": 2063895,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); bullish chart patterns detected (46%); favorable market conditions (25%)",
+      "strategy_rationale": "KOTAKBANK presents a sell opportunity with 43.8% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "High"
+    }
+  ],
+  "as_of": "2026-01-09T20:19:44.462022",
+  "universe": "banknifty",
+  "mode": "Intraday",
+  "elapsed_seconds": 30.147906,
+  "policy_version": "1.0",
+  "run_id": "banknifty:Intraday:2026-01-09T14:50:30.038099"
+}

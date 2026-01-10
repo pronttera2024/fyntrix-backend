@@ -1,0 +1,160 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "BANKBARODA",
+      "score_blend": 44.9,
+      "blend_score": 44.9,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 42.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Rounding Top",
+          "direction": "BEARISH",
+          "confidence": 75.0,
+          "description": "Rounding top with resistance near 4190.24",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 3,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:21:19.311406Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 300.65,
+      "current_price": 300.65,
+      "prev_close": 300.65,
+      "intraday_change_pct": 0.37,
+      "open": 299.55,
+      "high": 305.5,
+      "low": 297.3,
+      "volume": 10209818,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (42%)",
+      "strategy_rationale": "BANKBARODA presents a sell opportunity with 44.9% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 2,
+      "symbol": "PNB",
+      "score_blend": 43.2,
+      "blend_score": 43.2,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 34.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 2,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:21:19.311559Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 122.9,
+      "current_price": 122.9,
+      "prev_close": 122.9,
+      "intraday_change_pct": -0.08,
+      "open": 123.0,
+      "high": 124.84,
+      "low": 122.24,
+      "volume": 13020147,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (34%)",
+      "strategy_rationale": "PNB presents a sell opportunity with 43.2% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    }
+  ],
+  "as_of": "2026-01-09T20:20:38.713817",
+  "universe": "banknifty",
+  "mode": "Intraday",
+  "elapsed_seconds": 30.010511,
+  "policy_version": "1.0",
+  "run_id": "banknifty:Intraday:2026-01-09T14:51:21.202428"
+}

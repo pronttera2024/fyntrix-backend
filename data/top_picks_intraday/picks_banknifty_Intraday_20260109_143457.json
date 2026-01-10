@@ -1,0 +1,160 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "IDFCFIRSTB",
+      "score_blend": 63.4,
+      "blend_score": 63.4,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 79.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Bullish AB=CD",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Equal legs pattern - continuation likely",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:04:54.957984Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 86.0,
+      "current_price": 86.0,
+      "prev_close": 86.0,
+      "intraday_change_pct": 0.12,
+      "open": 85.9,
+      "high": 86.79,
+      "low": 85.07,
+      "volume": 31024146,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish chart patterns detected (79%); favorable market conditions (75%); bullish options activity (58%)",
+      "strategy_rationale": "IDFCFIRSTB presents a buy opportunity with 63.4% confidence. Pattern Recognition signal at 79% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "High"
+    },
+    {
+      "rank": 2,
+      "symbol": "HDFCBANK",
+      "score_blend": 44.7,
+      "blend_score": 44.7,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 41.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Bullish AB=CD",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Equal legs pattern - continuation likely",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 3,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:04:54.958052Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 939.0,
+      "current_price": 939.0,
+      "prev_close": 939.0,
+      "intraday_change_pct": -0.63,
+      "open": 945.0,
+      "high": 950.6,
+      "low": 933.3,
+      "volume": 38182528,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (41%)",
+      "strategy_rationale": "HDFCBANK presents a sell opportunity with 44.7% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    }
+  ],
+  "as_of": "2026-01-09T20:04:10.039006",
+  "universe": "banknifty",
+  "mode": "Intraday",
+  "elapsed_seconds": 30.020042,
+  "policy_version": "1.0",
+  "run_id": "banknifty:Intraday:2026-01-09T14:34:57.755132"
+}

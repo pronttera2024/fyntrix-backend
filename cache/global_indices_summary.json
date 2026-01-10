@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-01-09T14:51:51.013356Z",
+  "data": {
+    "indices": [
+      {
+        "name": "S&P 500",
+        "price": 4567.89,
+        "chg_pct": 0.45,
+        "source": "Demo"
+      },
+      {
+        "name": "NASDAQ",
+        "price": 14234.56,
+        "chg_pct": 0.72,
+        "source": "Demo"
+      },
+      {
+        "name": "LSE (FTSE 100)",
+        "price": 7456.32,
+        "chg_pct": 0.18,
+        "source": "Demo"
+      },
+      {
+        "name": "Hang Seng",
+        "price": 18765.43,
+        "chg_pct": -0.23,
+        "source": "Demo"
+      }
+    ],
+    "source": "Fallback",
+    "region": "Global",
+    "as_of": "",
+    "fetched_at": "2026-01-09T14:51:51.012899Z"
+  }
+}

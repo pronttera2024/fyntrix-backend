@@ -1,0 +1,86 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "RELIANCE",
+      "score_blend": 61.6,
+      "blend_score": 61.6,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Inverse Head & Shoulders: ",
+      "rationale": "Inverse Head & Shoulders: ",
+      "scores": {
+        "pattern_recognition": 73.0,
+        "market_regime": 75.0,
+        "options": 57.5,
+        "sentiment": 50.0,
+        "watchlist_intelligence": 50.0,
+        "trade_strategy": 50.0
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Inverse Head & Shoulders",
+          "direction": "BULLISH",
+          "confidence": 78.50627643663103,
+          "description": "Bullish inverse H&S with neckline at 6895.94",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 3,
+        "bearish": 0,
+        "neutral": 4,
+        "total_agents": 6
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T20:17:36.265291Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1475.3,
+      "current_price": 1475.3,
+      "prev_close": 1475.3,
+      "intraday_change_pct": 0.7,
+      "open": 1465.0,
+      "high": 1479.9,
+      "low": 1465.0,
+      "volume": 8333071,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (73%); bullish options activity (58%)",
+      "strategy_rationale": "RELIANCE presents a buy opportunity with 61.6% confidence. Market Regime signal at 75% supports this view.",
+      "value_bucket": "High"
+    }
+  ],
+  "as_of": "2026-01-09T20:16:10.347363",
+  "universe": "nifty50",
+  "mode": "Swing",
+  "elapsed_seconds": 85.916405,
+  "policy_version": "1.0",
+  "run_id": "nifty50:Swing:2026-01-09T14:47:36.732523"
+}

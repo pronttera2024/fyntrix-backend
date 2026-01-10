@@ -1,0 +1,235 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "symbol": "AXISBANK",
+      "score_blend": 60.6,
+      "blend_score": 60.6,
+      "recommendation": "Buy",
+      "is_actionable": true,
+      "recommendation_note": null,
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#15803d",
+        "background": "#f0fdf4",
+        "border": "#bbf7d0",
+        "badge": "bg-green-50 text-green-700 border-green-200"
+      },
+      "confidence": "Medium",
+      "reasoning": "Volume Breakout (Bullish): ",
+      "rationale": "Volume Breakout (Bullish): ",
+      "scores": {
+        "pattern_recognition": 66.0,
+        "market_regime": 75.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Volume Breakout (Bullish)",
+          "direction": "BULLISH",
+          "confidence": 82,
+          "description": "Strong volume breakout above resistance",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Accumulation Zone",
+          "direction": "BULLISH",
+          "confidence": 76,
+          "description": "Smart money accumulating - bullish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 5,
+        "bearish": 0,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:59:40.206793Z",
+      "regime_bucket": "Bull",
+      "vol_bucket": "MediumVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 1272.0,
+      "current_price": 1272.0,
+      "prev_close": 1272.0,
+      "intraday_change_pct": -1.15,
+      "open": 1286.8,
+      "high": 1295.3,
+      "low": 1270.1,
+      "volume": 5531225,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "favorable market conditions (75%); bullish chart patterns detected (66%); bullish options activity (58%)",
+      "strategy_rationale": "AXISBANK presents a buy opportunity with 60.6% confidence. Market Regime signal at 75% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    },
+    {
+      "rank": 2,
+      "symbol": "INDUSINDBK",
+      "score_blend": 43.0,
+      "blend_score": 43.0,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three White Soldiers: ",
+      "rationale": "Three White Soldiers: ",
+      "scores": {
+        "pattern_recognition": 33.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three White Soldiers",
+          "direction": "BULLISH",
+          "confidence": 78,
+          "description": "Strong bullish reversal - three consecutive green candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 2,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:59:40.206904Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "LowVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 882.25,
+      "current_price": 882.25,
+      "prev_close": 882.25,
+      "intraday_change_pct": 0.48,
+      "open": 878.05,
+      "high": 892.0,
+      "low": 878.05,
+      "volume": 2515150,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (33%)",
+      "strategy_rationale": "INDUSINDBK presents a sell opportunity with 43.0% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Mid"
+    },
+    {
+      "rank": 3,
+      "symbol": "HEROMOTOCO",
+      "score_blend": 42.3,
+      "blend_score": 42.3,
+      "recommendation": "Sell",
+      "is_actionable": true,
+      "recommendation_note": "Bearish outlook with acceptable risk/reward (typically for F&O stocks).",
+      "risk_reward_ratio": null,
+      "color_scheme": {
+        "text": "#991b1b",
+        "background": "#fee2e2",
+        "border": "#fecaca",
+        "badge": "bg-red-100 text-red-800 border-red-300"
+      },
+      "confidence": "Medium",
+      "reasoning": "Three Black Crows: ",
+      "rationale": "Three Black Crows: ",
+      "scores": {
+        "pattern_recognition": 30.0,
+        "market_regime": 25.0,
+        "sentiment": 50.0,
+        "options": 57.5
+      },
+      "price": null,
+      "target": null,
+      "upside_pct": null,
+      "key_signals": [
+        {
+          "type": "Three Black Crows",
+          "direction": "BEARISH",
+          "confidence": 78,
+          "description": "Strong bearish reversal - three consecutive red candles",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Distribution Zone",
+          "direction": "BEARISH",
+          "confidence": 76,
+          "description": "Smart money distributing - bearish",
+          "agent": "pattern_recognition"
+        },
+        {
+          "type": "Morning Star",
+          "direction": "BULLISH",
+          "confidence": 74,
+          "description": "Bullish reversal at bottom - strong buy signal",
+          "agent": "pattern_recognition"
+        }
+      ],
+      "agent_consensus": {
+        "bullish": 0,
+        "bearish": 2,
+        "neutral": 2,
+        "total_agents": 4
+      },
+      "horizon": "Swing",
+      "timestamp": "2026-01-09T19:59:40.206921Z",
+      "regime_bucket": "Bear",
+      "vol_bucket": "LowVol",
+      "user_risk_bucket": "Moderate",
+      "last_price": 5773.0,
+      "current_price": 5773.0,
+      "prev_close": 5773.0,
+      "intraday_change_pct": -1.32,
+      "open": 5850.0,
+      "high": 5891.0,
+      "low": 5751.0,
+      "volume": 500217,
+      "price_data_source": "Yahoo Finance",
+      "key_findings": "bullish options activity (58%); positive market sentiment (50%); bullish chart patterns detected (30%)",
+      "strategy_rationale": "HEROMOTOCO presents a sell opportunity with 42.3% confidence. Options signal at 58% supports this view.",
+      "session_segment": "PowerHour",
+      "value_bucket": "Open"
+    }
+  ],
+  "as_of": "2026-01-09T19:56:26.097580",
+  "universe": "nifty50",
+  "mode": "Intraday",
+  "elapsed_seconds": 191.734978,
+  "policy_version": "1.0",
+  "run_id": "nifty50:Intraday:2026-01-09T14:29:45.428164"
+}

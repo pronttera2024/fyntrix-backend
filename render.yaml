@@ -1,0 +1,25 @@
+services:
+  # Backend API Service
+  - type: web
+    name: fyntrix-backend
+    env: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: DEBUG
+        value: False
+      - key: LOG_LEVEL
+        value: INFO
+      # Add your API keys in Render dashboard as secret environment variables:
+      # - OPENAI_API_KEY
+      # - FINNHUB_API_KEY
+      # - ALPHA_VANTAGE_API_KEY
+      # - MASSIVE_API_KEY
+      # - ANTHROPIC_API_KEY (optional)
+      # - OPENAI_DAILY_BUDGET
+      # - OPENAI_MAX_RPM

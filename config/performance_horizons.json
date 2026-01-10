@@ -1,0 +1,20 @@
+{
+  "Scalping": {
+    "type": "exit_only"
+  },
+  "Intraday": {
+    "type": "eod_close"
+  },
+  "Swing": {
+    "type": "fixed_days",
+    "days": 5
+  },
+  "Options": {
+    "type": "fixed_days",
+    "days": 3
+  },
+  "Futures": {
+    "type": "fixed_days",
+    "days": 3
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "date": "2026-01-09",
+  "generated_at": "2026-01-09T20:22:21.305841",
+  "universe": "banknifty",
+  "mode": "Futures",
+  "total_analyzed": 12,
+  "passed_filter": 0,
+  "picks_count": 0,
+  "picks": [],
+  "next_refresh": "2026-01-10T06:00:00Z",
+  "metadata": {
+    "analysis_time_seconds": 30.012989,
+    "min_confidence": "medium",
+    "agent_weights": {
+      "technical": 0.16,
+      "global": 0.18,
+      "policy": 0.16,
+      "options": 0.1,
+      "sentiment": 0.08,
+      "microstructure": 0.02,
+      "risk": 0.09,
+      "pattern": 0.13,
+      "regime": 0.08,
+      "watchlist": 0.0,
+      "trade_strategy": 0.0,
+      "auto_monitoring": 0.0,
+      "personalization": 0.0
+    },
+    "version": "1.0",
+    "policy_version": "1.0"
+  }
+}
