@@ -16,7 +16,7 @@ uvicorn==0.24.0
 python-dotenv==1.0.0  # For loading .env files
 
 # Technical analysis
-pandas-ta==0.3.14b0
+pandas-ta>=0.3.14  # Using stable version instead of beta
 ta-lib==0.4.28  # May need manual installation on Windows
 numpy==1.24.3
 pandas==2.0.3
