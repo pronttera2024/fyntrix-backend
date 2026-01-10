@@ -4,8 +4,12 @@
 Write-Host "🚀 Starting ARISE Backend Server..." -ForegroundColor Cyan
 Write-Host ""
 
-# Set OpenAI API Key (removed hardcoded key for security)
-# $env:OPENAI_API_KEY = "sk-proj-..."  # Set via environment variable or .env file
+# Set OpenAI API Key (from environment variable)
+if (-not $env:OPENAI_API_KEY) {
+    Write-Host "[WARN] OPENAI_API_KEY environment variable not set" -ForegroundColor Yellow
+} else {
+    Write-Host "[OK] OpenAI API Key configured from environment" -ForegroundColor Green
+}
 $env:OPENAI_DAILY_BUDGET = "10.0"
 $env:OPENAI_MAX_RPM = "60"
 

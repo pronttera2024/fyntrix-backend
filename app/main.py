@@ -8,7 +8,7 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'), over
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from .routers import market, agents, strategy, memory, news, chat, chart, zerodha_auth, zerodha_data, notifications, cache, websocket, performance, analytics, scalping, watchlist
+from .routers import market, agents, strategy, memory, news, chat, chart, zerodha_auth, zerodha_data, notifications, cache, websocket, performance, analytics, scalping, watchlist, auth
 from .routers import trading
 from .routers import support
 from .services.cache import clear_memory_cache
@@ -143,6 +143,7 @@ def clear_cache():
     clear_memory_cache()
     return {"ok": True, "message": "Cache cleared"}
 
+app.include_router(auth.router, prefix="/v1")
 app.include_router(market.router, prefix="/v1")
 app.include_router(agents.router, prefix="/v1")
 app.include_router(strategy.router, prefix="/v1")

@@ -2,9 +2,9 @@ import os
 from typing import Any, Dict, List, Optional
 
 import httpx
+import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
 from pydantic import BaseModel, ValidationError
 
 
@@ -56,7 +56,7 @@ async def decode_token(token: str) -> TokenPayload:
     jwks = await get_jwks()
     try:
         unverified = jwt.get_unverified_header(token)
-    except JWTError:
+    except jwt.PyJWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token header")
 
     kid = unverified.get("kid")
@@ -73,7 +73,7 @@ async def decode_token(token: str) -> TokenPayload:
             issuer=OIDC_ISSUER,
         )
         return TokenPayload(**payload)
-    except (JWTError, ValidationError):
+    except (jwt.PyJWTError, ValidationError):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 

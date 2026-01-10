@@ -13,6 +13,9 @@ openai
 apscheduler
 python-jose[cryptography]
 cryptography
+boto3==1.34.34
+warrant==0.6.1
+PyJWT==2.9.0
 SQLAlchemy==2.0.36
 alembic==1.13.3
 psycopg2-binary==2.9.9

@@ -6,7 +6,10 @@ import asyncio
 import os
 from dotenv import load_dotenv
 
-# API key loaded from environment or .env file
+# Set API key in environment (use environment variable or .env file)
+if 'OPENAI_API_KEY' not in os.environ:
+    print("Warning: OPENAI_API_KEY not set. Please set it in .env or environment variables.")
+    os.environ['OPENAI_API_KEY'] = 'your_openai_key_here'  # Placeholder for testing
 
 # Load dotenv after setting env
 load_dotenv(override=True)

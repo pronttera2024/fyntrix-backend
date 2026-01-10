@@ -23,11 +23,13 @@ async def test_openai_api():
     print("-" * 70)
     
     try:
-        if not os.getenv('OPENAI_API_KEY'):
-            print("OPENAI_API_KEY not set. Please set it in environment or .env file.")
-            return
+        # Use environment variable for API key (set in .env or environment)
+        if 'OPENAI_API_KEY' not in os.environ:
+            print("Warning: OPENAI_API_KEY not set. Please set it in .env or environment variables.")
+            os.environ['OPENAI_API_KEY'] = 'your_openai_key_here'  # Placeholder for testing
+
         print("🧪 Testing OpenAI API Key with 3 consecutive calls...")
-        print(f"Key starts with: {os.getenv('OPENAI_API_KEY')[:30]}...\n")
+        print(f"Key starts with: {os.environ['OPENAI_API_KEY'][:30]}...\n")
 
         for i in range(3):
             try:
