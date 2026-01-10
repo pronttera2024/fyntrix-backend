@@ -7,6 +7,7 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'), over
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from contextlib import asynccontextmanager
 from .routers import market, agents, strategy, memory, news, chat, chart, zerodha_auth, zerodha_data, notifications, cache, websocket, performance, analytics, scalping, watchlist, auth
 from .routers import trading
@@ -94,7 +95,22 @@ async def lifespan(app: FastAPI):
     except:
         pass
 
-app = FastAPI(title=f"{APP_NAME} API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(
+    title=f"{APP_NAME} API",
+    version="0.1.0",
+    lifespan=lifespan,
+    security=[{"BearerAuth": []}],
+    components={
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
+            }
+        }
+    }
+)
 
 app.add_middleware(
     CORSMiddleware,

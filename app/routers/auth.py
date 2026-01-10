@@ -2,6 +2,7 @@
 Authentication router for AWS Cognito
 """
 from fastapi import APIRouter, HTTPException, status, Depends, Header
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from typing import Optional
 from ..schemas.auth import (
     SignupRequest,
@@ -15,6 +16,9 @@ from ..schemas.auth import (
 from ..services.cognito_auth import get_cognito_service, CognitoAuthService
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+# Security scheme for JWT Bearer tokens
+security = HTTPBearer()
 
 
 @router.post(
@@ -177,28 +181,20 @@ async def refresh_token(
     description="""
     Get information about the currently authenticated user.
     
-    Requires a valid access token in the Authorization header.
-    """
+    Requires a valid access token (use Authorize button in Swagger UI).
+    """,
+    dependencies=[Depends(security)]  # Add security dependency
 )
 async def get_current_user(
-    authorization: str = Header(..., description="Bearer token"),
+    credentials: HTTPAuthorizationCredentials = Depends(security),
     cognito: CognitoAuthService = Depends(get_cognito_service)
 ):
     """
     Get current user information
     
-    - **Authorization**: Bearer {access_token}
-    
     Returns user profile information.
     """
-    # Extract token from "Bearer <token>" format
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authorization header format. Use: Bearer <token>"
-        )
-    
-    access_token = authorization.split(" ")[1]
+    access_token = credentials.credentials
     
     result = cognito.get_user_info(access_token=access_token)
     
