@@ -2,7 +2,7 @@
 # Install: pip install -r requirements_phase2.txt
 
 # OpenAI for LLM integration
-openai==1.3.7
+openai>=1.6.1,<2.0.0  # Compatible with langchain-openai
 anthropic==0.7.8  # Alternative LLM (optional)
 
 # Agent framework
@@ -16,8 +16,8 @@ uvicorn==0.24.0
 python-dotenv==1.0.0  # For loading .env files
 
 # Technical analysis
-pandas-ta>=0.3.14  # Using stable version instead of beta
-ta-lib==0.4.28  # May need manual installation on Windows
+# pandas-ta>=0.3.14  # Commented out - package not available in PyPI
+# ta-lib==0.4.28  # Commented out - requires complex C library compilation
 numpy==1.24.3
 pandas==2.0.3
 scipy>=1.11.0  # For peak detection in Elliott Wave
@@ -41,7 +41,7 @@ asyncio==3.4.3
 # celery==5.3.4
 
 # WebSocket for real-time updates
-websockets==12.0
+websockets>=13.0  # Required by yfinance
 
 # Utilities
 python-dotenv==1.0.0

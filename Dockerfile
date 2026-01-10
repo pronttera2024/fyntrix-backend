@@ -20,23 +20,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install TA-Lib C library (required for ta-lib Python package)
-RUN wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
-    tar -xzf ta-lib-0.4.0-src.tar.gz && \
-    cd ta-lib/ && \
-    ./configure --prefix=/usr && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf ta-lib ta-lib-0.4.0-src.tar.gz
-
 # Copy requirements files first to leverage Docker cache
 COPY requirements.txt requirements_phase2.txt ./
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir -r requirements_phase2.txt && \
-    pip cache purge
+    pip install --no-cache-dir -r requirements_phase2.txt
 
 # Copy the rest of the application files
 COPY . .
