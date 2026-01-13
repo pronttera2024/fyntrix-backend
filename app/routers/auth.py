@@ -11,7 +11,12 @@ from ..schemas.auth import (
     AuthResponse,
     UserResponse,
     RefreshTokenRequest,
-    ErrorResponse
+    ErrorResponse,
+    PhoneSignupRequest,
+    PhoneVerifyOTPRequest,
+    PhoneLoginRequest,
+    PhoneLoginVerifyRequest,
+    PhoneUserResponse
 )
 from ..services.cognito_auth import get_cognito_service, CognitoAuthService
 
@@ -227,3 +232,172 @@ async def health_check(
         "user_pool_id": cognito.user_pool_id,
         "client_id": cognito.client_id
     }
+
+
+@router.post(
+    "/phone/signup",
+    status_code=status.HTTP_201_CREATED,
+    responses={
+        201: {"description": "OTP sent to phone number"},
+        400: {"model": ErrorResponse, "description": "Invalid input data"},
+        409: {"model": ErrorResponse, "description": "User already exists"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Sign up with phone number",
+    description="""
+    Create a new user account with phone number.
+    
+    **Requirements:**
+    - Phone number must be in E.164 format (e.g., +919876543210)
+    - Name is required
+    
+    **Flow:**
+    1. Call this endpoint with phone_number and name
+    2. OTP will be sent to the phone via SMS
+    3. Call /phone/verify-signup with the OTP to complete registration
+    """
+)
+async def phone_signup(
+    request: PhoneSignupRequest,
+    cognito: CognitoAuthService = Depends(get_cognito_service)
+):
+    """
+    Sign up a new user with phone number
+    
+    - **phone_number**: Phone number in E.164 format (e.g., +919876543210)
+    - **name**: User's full name
+    
+    Returns confirmation that OTP was sent.
+    """
+    result = cognito.phone_signup(
+        phone_number=request.phone_number,
+        name=request.name
+    )
+    
+    return {
+        "message": result['message'],
+        "phone_number": result['phone_number'],
+        "user_sub": result['user_sub']
+    }
+
+
+@router.post(
+    "/phone/verify-signup",
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {"description": "Phone number verified successfully"},
+        400: {"model": ErrorResponse, "description": "Invalid or expired OTP"},
+        401: {"model": ErrorResponse, "description": "User already confirmed"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Verify phone number with OTP",
+    description="""
+    Verify phone number with OTP code received via SMS.
+    
+    After successful verification, user can login using /phone/login endpoint.
+    """
+)
+async def phone_verify_signup(
+    request: PhoneVerifyOTPRequest,
+    cognito: CognitoAuthService = Depends(get_cognito_service)
+):
+    """
+    Verify phone number with OTP
+    
+    - **phone_number**: Phone number in E.164 format
+    - **otp_code**: 6-digit OTP code received via SMS
+    
+    Returns verification confirmation.
+    """
+    result = cognito.phone_verify_signup(
+        phone_number=request.phone_number,
+        otp_code=request.otp_code
+    )
+    
+    return result
+
+
+@router.post(
+    "/phone/login",
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {"description": "OTP sent to phone number"},
+        403: {"model": ErrorResponse, "description": "Phone number not verified"},
+        404: {"model": ErrorResponse, "description": "User not found"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Initiate phone login",
+    description="""
+    Initiate login with phone number - sends OTP via SMS.
+    
+    **Flow:**
+    1. Call this endpoint with phone_number
+    2. OTP will be sent to the phone via SMS
+    3. Call /phone/login/verify with the OTP and session token to get auth tokens
+    """
+)
+async def phone_login(
+    request: PhoneLoginRequest,
+    cognito: CognitoAuthService = Depends(get_cognito_service)
+):
+    """
+    Initiate phone login - sends OTP
+    
+    - **phone_number**: Phone number in E.164 format
+    
+    Returns session token needed for OTP verification.
+    """
+    result = cognito.phone_login_initiate(
+        phone_number=request.phone_number
+    )
+    
+    return {
+        "message": result['message'],
+        "session": result['session'],
+        "phone_number": request.phone_number
+    }
+
+
+@router.post(
+    "/phone/login/verify",
+    response_model=AuthResponse,
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {"description": "Successfully authenticated"},
+        400: {"model": ErrorResponse, "description": "Invalid or expired OTP"},
+        401: {"model": ErrorResponse, "description": "Invalid OTP code"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Verify OTP and complete login",
+    description="""
+    Verify OTP code and complete phone login.
+    
+    Returns JWT tokens (access_token, id_token, refresh_token) for API authorization.
+    """
+)
+async def phone_login_verify(
+    request: PhoneLoginVerifyRequest,
+    cognito: CognitoAuthService = Depends(get_cognito_service)
+):
+    """
+    Verify OTP and complete login
+    
+    - **phone_number**: Phone number in E.164 format
+    - **session**: Session token from /phone/login endpoint
+    - **otp_code**: 6-digit OTP code received via SMS
+    
+    Returns authentication tokens.
+    """
+    result = cognito.phone_login_verify(
+        phone_number=request.phone_number,
+        session=request.session,
+        otp_code=request.otp_code
+    )
+    
+    return AuthResponse(
+        access_token=result['access_token'],
+        id_token=result['id_token'],
+        refresh_token=result['refresh_token'],
+        expires_in=result['expires_in'],
+        token_type=result['token_type']
+    )

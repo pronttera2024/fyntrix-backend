@@ -75,3 +75,58 @@ class ErrorResponse(BaseModel):
     """Error response"""
     error: str = Field(..., description="Error type")
     message: str = Field(..., description="Error message")
+
+
+class PhoneSignupRequest(BaseModel):
+    """User signup request with phone number"""
+    phone_number: str = Field(..., description="User phone number in E.164 format (e.g., +919876543210)")
+    name: str = Field(..., min_length=1, max_length=100, description="Full name")
+    
+    @validator('phone_number')
+    def validate_phone_number(cls, v):
+        """Validate phone number is in E.164 format"""
+        if not re.match(r'^\+[1-9]\d{1,14}$', v):
+            raise ValueError('Phone number must be in E.164 format (e.g., +919876543210)')
+        return v
+    
+    @validator('name')
+    def validate_name(cls, v):
+        """Validate name is not empty and contains valid characters"""
+        if not v.strip():
+            raise ValueError('Name cannot be empty')
+        if not re.match(r'^[a-zA-Z\s\-\.]+$', v):
+            raise ValueError('Name can only contain letters, spaces, hyphens, and periods')
+        return v.strip()
+
+
+class PhoneVerifyOTPRequest(BaseModel):
+    """Verify OTP for phone signup"""
+    phone_number: str = Field(..., description="User phone number in E.164 format")
+    otp_code: str = Field(..., min_length=6, max_length=6, description="6-digit OTP code")
+
+
+class PhoneLoginRequest(BaseModel):
+    """User login request with phone number"""
+    phone_number: str = Field(..., description="User phone number in E.164 format")
+    
+    @validator('phone_number')
+    def validate_phone_number(cls, v):
+        """Validate phone number is in E.164 format"""
+        if not re.match(r'^\+[1-9]\d{1,14}$', v):
+            raise ValueError('Phone number must be in E.164 format (e.g., +919876543210)')
+        return v
+
+
+class PhoneLoginVerifyRequest(BaseModel):
+    """Verify OTP for phone login"""
+    phone_number: str = Field(..., description="User phone number in E.164 format")
+    session: str = Field(..., description="Session token from login initiation")
+    otp_code: str = Field(..., min_length=6, max_length=6, description="6-digit OTP code")
+
+
+class PhoneUserResponse(BaseModel):
+    """User information response for phone auth"""
+    user_id: str = Field(..., description="User unique identifier (sub)")
+    phone_number: str = Field(..., description="User phone number")
+    name: str = Field(..., description="User full name")
+    phone_number_verified: bool = Field(..., description="Phone verification status")

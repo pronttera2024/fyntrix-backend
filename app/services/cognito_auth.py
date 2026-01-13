@@ -215,6 +215,212 @@ class CognitoAuthService:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail=f"Invalid or expired token: {error_message}"
             )
+    
+    def phone_signup(self, phone_number: str, name: str) -> Dict:
+        """
+        Sign up a new user with phone number
+        Sends OTP via SNS for verification
+        """
+        try:
+            secret_hash = self._get_secret_hash(phone_number)
+            
+            response = self.client.sign_up(
+                ClientId=self.client_id,
+                SecretHash=secret_hash,
+                Username=phone_number,
+                Password=self._generate_random_password(),
+                UserAttributes=[
+                    {'Name': 'phone_number', 'Value': phone_number},
+                    {'Name': 'name', 'Value': name},
+                ]
+            )
+            
+            return {
+                'user_sub': response['UserSub'],
+                'phone_number': phone_number,
+                'name': name,
+                'message': 'OTP sent to phone number. Please verify to complete signup.'
+            }
+            
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            
+            if error_code == 'UsernameExistsException':
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="User with this phone number already exists"
+                )
+            elif error_code == 'InvalidParameterException':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid parameter: {error_message}"
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Signup failed: {error_message}"
+                )
+    
+    def phone_verify_signup(self, phone_number: str, otp_code: str) -> Dict:
+        """
+        Verify phone number with OTP code during signup
+        """
+        try:
+            secret_hash = self._get_secret_hash(phone_number)
+            
+            self.client.confirm_sign_up(
+                ClientId=self.client_id,
+                SecretHash=secret_hash,
+                Username=phone_number,
+                ConfirmationCode=otp_code
+            )
+            
+            return {
+                'message': 'Phone number verified successfully. You can now login.',
+                'phone_number': phone_number,
+                'verified': True
+            }
+            
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            
+            if error_code == 'CodeMismatchException':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Invalid OTP code"
+                )
+            elif error_code == 'ExpiredCodeException':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="OTP code has expired. Please request a new one."
+                )
+            elif error_code == 'NotAuthorizedException':
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="User is already confirmed or OTP is invalid"
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Verification failed: {error_message}"
+                )
+    
+    def phone_login_initiate(self, phone_number: str) -> Dict:
+        """
+        Initiate phone login - sends OTP via SNS
+        Uses CUSTOM_AUTH flow with SMS_MFA
+        """
+        try:
+            secret_hash = self._get_secret_hash(phone_number)
+            
+            response = self.client.initiate_auth(
+                ClientId=self.client_id,
+                AuthFlow='CUSTOM_AUTH',
+                AuthParameters={
+                    'USERNAME': phone_number,
+                    'SECRET_HASH': secret_hash
+                }
+            )
+            
+            if response.get('ChallengeName') == 'CUSTOM_CHALLENGE':
+                return {
+                    'session': response['Session'],
+                    'challenge_name': response['ChallengeName'],
+                    'message': 'OTP sent to your phone number'
+                }
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="Unexpected authentication flow"
+                )
+            
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            
+            if error_code == 'UserNotFoundException':
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="User not found. Please sign up first."
+                )
+            elif error_code == 'UserNotConfirmedException':
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Phone number not verified. Please complete signup verification."
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Login initiation failed: {error_message}"
+                )
+    
+    def phone_login_verify(self, phone_number: str, session: str, otp_code: str) -> Dict:
+        """
+        Verify OTP and complete phone login
+        Returns authentication tokens
+        """
+        try:
+            secret_hash = self._get_secret_hash(phone_number)
+            
+            response = self.client.respond_to_auth_challenge(
+                ClientId=self.client_id,
+                ChallengeName='CUSTOM_CHALLENGE',
+                Session=session,
+                ChallengeResponses={
+                    'USERNAME': phone_number,
+                    'ANSWER': otp_code,
+                    'SECRET_HASH': secret_hash
+                }
+            )
+            
+            if 'AuthenticationResult' in response:
+                auth_result = response['AuthenticationResult']
+                return {
+                    'access_token': auth_result['AccessToken'],
+                    'id_token': auth_result['IdToken'],
+                    'refresh_token': auth_result['RefreshToken'],
+                    'expires_in': auth_result['ExpiresIn'],
+                    'token_type': 'Bearer'
+                }
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="Authentication failed - no tokens returned"
+                )
+            
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            
+            if error_code == 'CodeMismatchException' or error_code == 'NotAuthorizedException':
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid OTP code"
+                )
+            elif error_code == 'ExpiredCodeException':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="OTP code has expired. Please request a new one."
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Login verification failed: {error_message}"
+                )
+    
+    def _generate_random_password(self) -> str:
+        """
+        Generate a random password for phone-based signup
+        Phone users don't use passwords, but Cognito requires one
+        """
+        import secrets
+        import string
+        
+        chars = string.ascii_letters + string.digits + "!@#$%^&*"
+        password = ''.join(secrets.choice(chars) for _ in range(16))
+        return password + "A1!"
 
 
 # Singleton instance
