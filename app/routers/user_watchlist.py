@@ -5,7 +5,7 @@ from typing import Optional, List
 
 from ..config.database import get_db
 from ..services.user_watchlist_service import UserWatchlistService
-from ..services.cognito_auth import get_current_user
+from ..deps import get_current_user
 
 router = APIRouter(prefix="/api/v1/watchlist", tags=["Watchlist"])
 
