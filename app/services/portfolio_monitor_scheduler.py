@@ -6,6 +6,8 @@ from typing import Optional, Dict, Any, List
 from ..core.market_hours import now_ist, is_cash_market_open_ist
 from .redis_client import set_json
 from .event_logger import log_event
+from ..db import SessionLocal
+from ..models import PortfolioSnapshot
 
 logger = logging.getLogger(__name__)
 
@@ -316,11 +318,40 @@ async def _run_portfolio_cycle() -> None:
         },
     }
 
+    # HYBRID APPROACH: Write to both Redis (cache) and PostgreSQL (history)
+    
+    # 1. Write to Redis for fast access
     try:
         set_json("portfolio:monitor:positions:last", payload, ex=600)
         logger.info("[PortfolioScheduler] Cached portfolio snapshot (%d positions)", len(positions_out))
     except Exception as e:
         logger.error("[PortfolioScheduler] Failed to cache portfolio snapshot: %s", e, exc_info=True)
+
+    # 2. Write to PostgreSQL for historical tracking
+    try:
+        db = SessionLocal()
+        try:
+            summary = payload.get("summary", {})
+            snapshot = PortfolioSnapshot(
+                snapshot_type="positions",
+                total_positions=summary.get("positions"),
+                total_value=summary.get("gross_exposure"),
+                total_pnl=summary.get("net_exposure"),
+                total_pnl_pct=None,  # Can calculate if needed
+                positions_json=positions_out,
+                metadata_json=summary,
+                snapshot_at=datetime.utcnow()
+            )
+            db.add(snapshot)
+            db.commit()
+            logger.info("[PortfolioScheduler] Saved portfolio snapshot to PostgreSQL")
+        except Exception as e:
+            db.rollback()
+            logger.error("[PortfolioScheduler] Failed to save to PostgreSQL: %s", e, exc_info=True)
+        finally:
+            db.close()
+    except Exception as e:
+        logger.error("[PortfolioScheduler] PostgreSQL connection failed: %s", e, exc_info=True)
 
     try:
         ws_manager = get_websocket_manager()

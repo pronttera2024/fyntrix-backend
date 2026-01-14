@@ -23,6 +23,8 @@ from .websocket_manager import get_websocket_manager
 from .scalping_exit_tracker import scalping_exit_tracker
 from .performance_analytics import performance_analytics
 from .event_logger import log_event
+from ..db import SessionLocal
+from ..models import DashboardPerformance
 
 logger = logging.getLogger(__name__)
 
@@ -121,7 +123,37 @@ class DashboardScheduler:
                 "metrics": result.get("metrics", {}),
             }
 
+            # HYBRID APPROACH: Write to both Redis (cache) and PostgreSQL (history)
+            
+            # 1. Write to Redis for fast access
             set_json("dashboard:overview:performance:7d", payload, ex=24 * 3600)
+
+            # 2. Write to PostgreSQL for historical tracking
+            try:
+                db = SessionLocal()
+                try:
+                    metrics = result.get("metrics", {})
+                    snapshot = DashboardPerformance(
+                        period_type="7d",
+                        total_recommendations=metrics.get("total_recommendations"),
+                        evaluated_count=metrics.get("evaluated_count"),
+                        win_rate=metrics.get("win_rate"),
+                        avg_pnl_pct=metrics.get("avg_pnl_pct"),
+                        total_pnl_pct=metrics.get("total_pnl_pct"),
+                        metrics_json=metrics,
+                        recommendations_json=result.get("recommendations", []),
+                        snapshot_at=datetime.utcnow()
+                    )
+                    db.add(snapshot)
+                    db.commit()
+                    logger.info("[DashboardScheduler] Saved performance snapshot to PostgreSQL")
+                except Exception as e:
+                    db.rollback()
+                    logger.error("[DashboardScheduler] Failed to save to PostgreSQL: %s", e, exc_info=True)
+                finally:
+                    db.close()
+            except Exception as e:
+                logger.error("[DashboardScheduler] PostgreSQL connection failed: %s", e, exc_info=True)
 
             # Optionally broadcast summary only (not full recommendations list)
             try:
