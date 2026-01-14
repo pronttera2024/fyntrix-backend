@@ -30,6 +30,7 @@ class PortfolioSnapshot(Base):
     # Indexes
     __table_args__ = (
         Index('idx_portfolio_snapshot_type_time', 'snapshot_type', 'snapshot_at'),
+        {'extend_existing': True}
     )
     
     def to_dict(self):
