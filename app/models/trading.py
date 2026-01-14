@@ -147,7 +147,7 @@ class PickOutcome(Base):
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
 
     # Relationships
-    pick_event = relationship("PickOutcome", back_populates="outcomes")
+    pick_event = relationship("PickEvent", back_populates="outcomes")
 
     # Unique constraint to prevent duplicate outcomes per pick/horizon
     __table_args__ = (
