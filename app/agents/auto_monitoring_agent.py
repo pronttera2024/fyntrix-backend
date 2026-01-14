@@ -21,7 +21,7 @@ from datetime import datetime, timedelta, timezone
 from .base import BaseAgent, AgentResult
 from ..core.market_hours import now_ist, is_cash_market_open_ist
 from ..models.strategy import StrategyAdvisory
-from ..services.support_resistance_service import support_resistance_service
+from ..services.support_resistance_redis import support_resistance_service
 from .sentiment_agent import SentimentAgent
 
 logger = logging.getLogger(__name__)

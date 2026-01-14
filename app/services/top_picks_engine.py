@@ -32,7 +32,7 @@ from .realtime_prices import enrich_picks_with_realtime_data
 from .event_logger import log_event
 from .chart_data_service import chart_data_service
 from .policy_store import get_policy_store
-from .support_resistance_service import support_resistance_service
+from .support_resistance_redis import support_resistance_service
 from .pick_logger import get_active_rl_policy
 from ..providers import get_data_provider
 from ..utils.trading_modes import normalize_mode, TradingMode, get_strategy_parameters
