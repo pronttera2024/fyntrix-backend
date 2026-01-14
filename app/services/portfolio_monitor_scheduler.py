@@ -16,6 +16,33 @@ _portfolio_task: Optional[asyncio.Task] = None
 _running = False
 
 
+async def _save_portfolio_to_postgres(positions_out: List[Dict[str, Any]], summary: Dict[str, Any]) -> None:
+    """Save portfolio snapshot to PostgreSQL in background (non-blocking)."""
+    try:
+        db = SessionLocal()
+        try:
+            snapshot = PortfolioSnapshot(
+                snapshot_type="positions",
+                total_positions=summary.get("positions"),
+                total_value=summary.get("gross_exposure"),
+                total_pnl=summary.get("net_exposure"),
+                total_pnl_pct=None,
+                positions_json=positions_out,
+                metadata_json=summary,
+                snapshot_at=datetime.utcnow()
+            )
+            db.add(snapshot)
+            db.commit()
+            logger.info("[PortfolioScheduler] Saved portfolio snapshot to PostgreSQL")
+        except Exception as e:
+            db.rollback()
+            logger.error("[PortfolioScheduler] Failed to save to PostgreSQL: %s", e, exc_info=True)
+        finally:
+            db.close()
+    except Exception as e:
+        logger.error("[PortfolioScheduler] PostgreSQL connection failed: %s", e, exc_info=True)
+
+
 def _is_market_open_ist() -> bool:
     """Return True if current time is within market hours (IST 9:15-15:30)."""
     ist_now = now_ist()
@@ -320,38 +347,16 @@ async def _run_portfolio_cycle() -> None:
 
     # HYBRID APPROACH: Write to both Redis (cache) and PostgreSQL (history)
     
-    # 1. Write to Redis for fast access
+    # 1. Write to Redis for fast access (synchronous, instant)
     try:
         set_json("portfolio:monitor:positions:last", payload, ex=600)
         logger.info("[PortfolioScheduler] Cached portfolio snapshot (%d positions)", len(positions_out))
     except Exception as e:
         logger.error("[PortfolioScheduler] Failed to cache portfolio snapshot: %s", e, exc_info=True)
 
-    # 2. Write to PostgreSQL for historical tracking
-    try:
-        db = SessionLocal()
-        try:
-            summary = payload.get("summary", {})
-            snapshot = PortfolioSnapshot(
-                snapshot_type="positions",
-                total_positions=summary.get("positions"),
-                total_value=summary.get("gross_exposure"),
-                total_pnl=summary.get("net_exposure"),
-                total_pnl_pct=None,  # Can calculate if needed
-                positions_json=positions_out,
-                metadata_json=summary,
-                snapshot_at=datetime.utcnow()
-            )
-            db.add(snapshot)
-            db.commit()
-            logger.info("[PortfolioScheduler] Saved portfolio snapshot to PostgreSQL")
-        except Exception as e:
-            db.rollback()
-            logger.error("[PortfolioScheduler] Failed to save to PostgreSQL: %s", e, exc_info=True)
-        finally:
-            db.close()
-    except Exception as e:
-        logger.error("[PortfolioScheduler] PostgreSQL connection failed: %s", e, exc_info=True)
+    # 2. Write to PostgreSQL in background (async, non-blocking)
+    summary = payload.get("summary", {})
+    asyncio.create_task(_save_portfolio_to_postgres(positions_out, summary))
 
     try:
         ws_manager = get_websocket_manager()

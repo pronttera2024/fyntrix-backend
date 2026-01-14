@@ -33,6 +33,33 @@ class DashboardScheduler:
     def __init__(self) -> None:
         self.scheduler = AsyncIOScheduler()
 
+    async def _save_performance_to_postgres(self, metrics: dict, result: dict) -> None:
+        """Save performance snapshot to PostgreSQL in background (non-blocking)."""
+        try:
+            db = SessionLocal()
+            try:
+                snapshot = DashboardPerformance(
+                    period_type="7d",
+                    total_recommendations=metrics.get("total_recommendations"),
+                    evaluated_count=metrics.get("evaluated_count"),
+                    win_rate=metrics.get("win_rate"),
+                    avg_pnl_pct=metrics.get("avg_pnl_pct"),
+                    total_pnl_pct=metrics.get("total_pnl_pct"),
+                    metrics_json=metrics,
+                    recommendations_json=result.get("recommendations", []),
+                    snapshot_at=datetime.utcnow()
+                )
+                db.add(snapshot)
+                db.commit()
+                logger.info("[DashboardScheduler] Saved performance snapshot to PostgreSQL")
+            except Exception as e:
+                db.rollback()
+                logger.error("[DashboardScheduler] Failed to save to PostgreSQL: %s", e, exc_info=True)
+            finally:
+                db.close()
+        except Exception as e:
+            logger.error("[DashboardScheduler] PostgreSQL connection failed: %s", e, exc_info=True)
+
     async def _compute_intraday_overview(self) -> None:
         """Compute fast intraday overview stats and cache in Redis.
 
@@ -125,35 +152,12 @@ class DashboardScheduler:
 
             # HYBRID APPROACH: Write to both Redis (cache) and PostgreSQL (history)
             
-            # 1. Write to Redis for fast access
+            # 1. Write to Redis for fast access (synchronous, instant)
             set_json("dashboard:overview:performance:7d", payload, ex=24 * 3600)
 
-            # 2. Write to PostgreSQL for historical tracking
-            try:
-                db = SessionLocal()
-                try:
-                    metrics = result.get("metrics", {})
-                    snapshot = DashboardPerformance(
-                        period_type="7d",
-                        total_recommendations=metrics.get("total_recommendations"),
-                        evaluated_count=metrics.get("evaluated_count"),
-                        win_rate=metrics.get("win_rate"),
-                        avg_pnl_pct=metrics.get("avg_pnl_pct"),
-                        total_pnl_pct=metrics.get("total_pnl_pct"),
-                        metrics_json=metrics,
-                        recommendations_json=result.get("recommendations", []),
-                        snapshot_at=datetime.utcnow()
-                    )
-                    db.add(snapshot)
-                    db.commit()
-                    logger.info("[DashboardScheduler] Saved performance snapshot to PostgreSQL")
-                except Exception as e:
-                    db.rollback()
-                    logger.error("[DashboardScheduler] Failed to save to PostgreSQL: %s", e, exc_info=True)
-                finally:
-                    db.close()
-            except Exception as e:
-                logger.error("[DashboardScheduler] PostgreSQL connection failed: %s", e, exc_info=True)
+            # 2. Write to PostgreSQL in background (async, non-blocking)
+            metrics = result.get("metrics", {})
+            asyncio.create_task(self._save_performance_to_postgres(metrics, result))
 
             # Optionally broadcast summary only (not full recommendations list)
             try:

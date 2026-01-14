@@ -32,6 +32,49 @@ _scheduler_task: Optional[asyncio.Task] = None
 _running: bool = False
 
 
+async def _save_top_picks_to_postgres(positions_out: List[Dict[str, Any]], summary: Dict[str, Any]) -> None:
+    """Save top picks positions snapshot to PostgreSQL in background (non-blocking)."""
+    try:
+        db = SessionLocal()
+        try:
+            # Extract universe and mode from positions if available
+            universe = "mixed"
+            mode = "mixed"
+            if positions_out:
+                first_pos = positions_out[0]
+                universe = first_pos.get("universe", "mixed")
+                mode = first_pos.get("mode", "mixed")
+            
+            # Calculate win/loss counts
+            win_count = sum(1 for p in positions_out if p.get("return_pct", 0) > 0)
+            loss_count = sum(1 for p in positions_out if p.get("return_pct", 0) <= 0)
+            total_pnl = sum(p.get("return_pct", 0) for p in positions_out)
+            
+            snapshot = TopPicksPositionSnapshot(
+                universe=universe,
+                mode=mode,
+                total_positions=summary.get("positions"),
+                active_positions=summary.get("positions"),
+                total_pnl=total_pnl,
+                total_pnl_pct=total_pnl / len(positions_out) if positions_out else 0,
+                win_count=win_count,
+                loss_count=loss_count,
+                positions_json=positions_out,
+                metadata_json=summary,
+                snapshot_at=datetime.utcnow()
+            )
+            db.add(snapshot)
+            db.commit()
+            logger.info("[TopPicksPositions] Saved positions snapshot to PostgreSQL")
+        except Exception as e:
+            db.rollback()
+            logger.error("[TopPicksPositions] Failed to save to PostgreSQL: %s", e, exc_info=True)
+        finally:
+            db.close()
+    except Exception as e:
+        logger.error("[TopPicksPositions] PostgreSQL connection failed: %s", e, exc_info=True)
+
+
 def _is_market_open_ist() -> bool:
     """Return True if current time is within cash market hours (IST 9:15-15:30)."""
     ist_now = now_ist()
@@ -220,54 +263,16 @@ async def _run_top_picks_positions_cycle() -> None:
 
     # HYBRID APPROACH: Write to both Redis (cache) and PostgreSQL (history)
     
-    # 1. Write to Redis for fast access
+    # 1. Write to Redis for fast access (synchronous, instant)
     try:
         set_json("top_picks:monitor:positions:last", payload, ex=600)
         logger.info("[TopPicksPositions] Cached positions snapshot (%d positions)", len(positions_out))
     except Exception as e:
         logger.error("[TopPicksPositions] Failed to cache positions snapshot: %s", e, exc_info=True)
 
-    # 2. Write to PostgreSQL for historical tracking
-    try:
-        db = SessionLocal()
-        try:
-            summary = payload.get("summary", {})
-            # Extract universe and mode from positions if available
-            universe = "mixed"
-            mode = "mixed"
-            if positions_out:
-                first_pos = positions_out[0]
-                universe = first_pos.get("universe", "mixed")
-                mode = first_pos.get("mode", "mixed")
-            
-            # Calculate win/loss counts
-            win_count = sum(1 for p in positions_out if p.get("return_pct", 0) > 0)
-            loss_count = sum(1 for p in positions_out if p.get("return_pct", 0) <= 0)
-            total_pnl = sum(p.get("return_pct", 0) for p in positions_out)
-            
-            snapshot = TopPicksPositionSnapshot(
-                universe=universe,
-                mode=mode,
-                total_positions=summary.get("positions"),
-                active_positions=summary.get("positions"),
-                total_pnl=total_pnl,
-                total_pnl_pct=total_pnl / len(positions_out) if positions_out else 0,
-                win_count=win_count,
-                loss_count=loss_count,
-                positions_json=positions_out,
-                metadata_json=summary,
-                snapshot_at=datetime.utcnow()
-            )
-            db.add(snapshot)
-            db.commit()
-            logger.info("[TopPicksPositions] Saved positions snapshot to PostgreSQL")
-        except Exception as e:
-            db.rollback()
-            logger.error("[TopPicksPositions] Failed to save to PostgreSQL: %s", e, exc_info=True)
-        finally:
-            db.close()
-    except Exception as e:
-        logger.error("[TopPicksPositions] PostgreSQL connection failed: %s", e, exc_info=True)
+    # 2. Write to PostgreSQL in background (async, non-blocking)
+    summary = payload.get("summary", {})
+    asyncio.create_task(_save_top_picks_to_postgres(positions_out, summary))
 
     # Optional WebSocket broadcast for live dashboards
     try:
