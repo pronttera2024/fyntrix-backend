@@ -17,6 +17,7 @@ from ..schemas.auth import (
     PhoneVerifyOTPRequest,
     PhoneLoginRequest,
     PhoneLoginVerifyRequest,
+    PhoneResendOTPRequest,
     PhoneUserResponse
 )
 from ..services.cognito_auth import get_cognito_service, CognitoAuthService
@@ -429,6 +430,49 @@ async def phone_verify_signup(
 
 
 @router.post(
+    "/phone/resend-otp",
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {"description": "OTP resent successfully"},
+        404: {"model": ErrorResponse, "description": "User not found"},
+        429: {"model": ErrorResponse, "description": "Too many attempts"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Resend OTP for phone verification",
+    description="""
+    Resend OTP code for phone number verification.
+    
+    **Works for both signup and login flows:**
+    - If user is unconfirmed (signup in progress): Resends signup verification OTP
+    - If user is confirmed (ready to login): Resends login OTP with session token
+    
+    **Usage:**
+    - During signup: Use this if OTP expired before verification
+    - During login: Use this if OTP expired before login verification
+    
+    This is a common endpoint that intelligently handles both scenarios.
+    """
+)
+async def phone_resend_otp(
+    request: PhoneResendOTPRequest,
+    cognito: CognitoAuthService = Depends(get_cognito_service)
+):
+    """
+    Resend OTP for phone verification (works for both signup and login)
+    
+    - **phone_number**: Phone number in E.164 format
+    
+    Returns confirmation that OTP was resent, with flow type (signup/login).
+    For login flow, also returns session token needed for verification.
+    """
+    result = cognito.resend_otp(
+        phone_number=request.phone_number
+    )
+    
+    return result
+
+
+@router.post(
     "/phone/login",
     status_code=status.HTTP_200_OK,
     responses={
@@ -445,6 +489,8 @@ async def phone_verify_signup(
     1. Call this endpoint with phone_number
     2. OTP will be sent to the phone via SMS
     3. Call /phone/login/verify with the OTP and session token to get auth tokens
+    
+    **Note:** If OTP expires, use /phone/resend-otp to get a new one.
     """
 )
 async def phone_login(

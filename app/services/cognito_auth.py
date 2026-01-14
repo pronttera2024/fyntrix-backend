@@ -442,6 +442,94 @@ class CognitoAuthService:
                     detail=f"Login verification failed: {error_message}"
                 )
     
+    def resend_otp(self, phone_number: str) -> Dict:
+        """
+        Resend OTP code for phone verification
+        Works for both signup (unconfirmed users) and login (confirmed users)
+        """
+        try:
+            secret_hash = self._get_secret_hash(phone_number)
+            
+            # First, check if user exists and their confirmation status
+            try:
+                user_response = self.client.admin_get_user(
+                    UserPoolId=self.user_pool_id,
+                    Username=phone_number
+                )
+                
+                user_status = user_response.get('UserStatus')
+                
+                # If user is not confirmed, resend signup confirmation code
+                if user_status == 'UNCONFIRMED':
+                    self.client.resend_confirmation_code(
+                        ClientId=self.client_id,
+                        SecretHash=secret_hash,
+                        Username=phone_number
+                    )
+                    return {
+                        'message': 'OTP resent to your phone number for signup verification',
+                        'phone_number': phone_number,
+                        'flow': 'signup'
+                    }
+                
+                # If user is confirmed, initiate login to send OTP
+                elif user_status == 'CONFIRMED':
+                    response = self.client.initiate_auth(
+                        ClientId=self.client_id,
+                        AuthFlow='CUSTOM_AUTH',
+                        AuthParameters={
+                            'USERNAME': phone_number,
+                            'SECRET_HASH': secret_hash
+                        }
+                    )
+                    
+                    if response.get('ChallengeName') == 'CUSTOM_CHALLENGE':
+                        return {
+                            'message': 'OTP resent to your phone number for login',
+                            'phone_number': phone_number,
+                            'session': response['Session'],
+                            'flow': 'login'
+                        }
+                    else:
+                        raise HTTPException(
+                            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Unexpected authentication flow"
+                        )
+                
+                else:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"User status is {user_status}. Cannot resend OTP."
+                    )
+                    
+            except ClientError as e:
+                if e.response['Error']['Code'] == 'UserNotFoundException':
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="User not found. Please sign up first."
+                    )
+                raise
+                
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            
+            if error_code == 'LimitExceededException':
+                raise HTTPException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    detail="Too many attempts. Please try again later."
+                )
+            elif error_code == 'InvalidParameterException':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid parameter: {error_message}"
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Failed to resend OTP: {error_message}"
+                )
+    
     def _generate_random_password(self) -> str:
         """
         Generate a random password for phone-based signup

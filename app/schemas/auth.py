@@ -124,6 +124,18 @@ class PhoneLoginVerifyRequest(BaseModel):
     otp_code: str = Field(..., min_length=6, max_length=6, description="6-digit OTP code")
 
 
+class PhoneResendOTPRequest(BaseModel):
+    """Resend OTP request for phone signup or login"""
+    phone_number: str = Field(..., description="User phone number in E.164 format")
+    
+    @validator('phone_number')
+    def validate_phone_number(cls, v):
+        """Validate phone number is in E.164 format"""
+        if not re.match(r'^\+[1-9]\d{1,14}$', v):
+            raise ValueError('Phone number must be in E.164 format (e.g., +919876543210)')
+        return v
+
+
 class PhoneUserResponse(BaseModel):
     """User information response for phone auth"""
     user_id: str = Field(..., description="User unique identifier (sub)")
