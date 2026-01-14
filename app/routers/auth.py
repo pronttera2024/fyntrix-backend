@@ -1,9 +1,10 @@
 """
 Authentication router for AWS Cognito
 """
-from fastapi import APIRouter, HTTPException, status, Depends, Header
+from fastapi import APIRouter, HTTPException, status, Depends, Header, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from typing import Optional
+from sqlalchemy.orm import Session
 from ..schemas.auth import (
     SignupRequest,
     LoginRequest,
@@ -19,11 +20,50 @@ from ..schemas.auth import (
     PhoneUserResponse
 )
 from ..services.cognito_auth import get_cognito_service, CognitoAuthService
+from ..services.user_service import UserService
+from ..config.database import get_db
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 # Security scheme for JWT Bearer tokens
 security = HTTPBearer()
+
+
+def get_request_metadata(request: Request) -> dict:
+    """
+    Extract request metadata for audit logging
+    
+    Args:
+        request: FastAPI Request object
+        
+    Returns:
+        Dictionary with ip_address, device, user_agent
+    """
+    # Get client IP (handle proxy headers)
+    ip_address = request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
+    if not ip_address:
+        ip_address = request.headers.get("X-Real-IP", "")
+    if not ip_address and request.client:
+        ip_address = request.client.host
+    
+    # Get user agent and device info
+    user_agent = request.headers.get("User-Agent", "Unknown")
+    
+    # Simple device detection from user agent
+    device = "Unknown"
+    if "Mobile" in user_agent or "Android" in user_agent or "iPhone" in user_agent:
+        device = "Mobile"
+    elif "Tablet" in user_agent or "iPad" in user_agent:
+        device = "Tablet"
+    elif "Mozilla" in user_agent or "Chrome" in user_agent:
+        device = "Desktop"
+    
+    return {
+        "ip_address": ip_address,
+        "device": device,
+        "user_agent": user_agent,
+        "location": None  # Can be enhanced with GeoIP lookup
+    }
 
 
 @router.post(
@@ -50,7 +90,9 @@ security = HTTPBearer()
 )
 async def signup(
     request: SignupRequest,
-    cognito: CognitoAuthService = Depends(get_cognito_service)
+    http_request: Request,
+    cognito: CognitoAuthService = Depends(get_cognito_service),
+    db: Session = Depends(get_db)
 ):
     """
     Sign up a new user
@@ -65,6 +107,20 @@ async def signup(
         email=request.email,
         password=request.password,
         name=request.name
+    )
+    
+    # Create user in database
+    request_metadata = get_request_metadata(http_request)
+    user = UserService.create_user_from_cognito(
+        db=db,
+        cognito_data={
+            "sub": result['user_sub'],
+            "email": result['email'],
+            "name": result['name'],
+            "email_verified": result['email_verified'],
+            "username": result['email']
+        },
+        request_metadata=request_metadata
     )
     
     return SignupResponse(
@@ -105,7 +161,9 @@ async def signup(
 )
 async def login(
     request: LoginRequest,
-    cognito: CognitoAuthService = Depends(get_cognito_service)
+    http_request: Request,
+    cognito: CognitoAuthService = Depends(get_cognito_service),
+    db: Session = Depends(get_db)
 ):
     """
     Log in a user
@@ -118,6 +176,15 @@ async def login(
     result = cognito.login(
         email=request.email,
         password=request.password
+    )
+    
+    # Get user info from Cognito and update database
+    user_info = cognito.get_user_info(access_token=result['access_token'])
+    request_metadata = get_request_metadata(http_request)
+    user = UserService.create_user_from_cognito(
+        db=db,
+        cognito_data=user_info,
+        request_metadata=request_metadata
     )
     
     return AuthResponse(
@@ -259,7 +326,9 @@ async def health_check(
 )
 async def phone_signup(
     request: PhoneSignupRequest,
-    cognito: CognitoAuthService = Depends(get_cognito_service)
+    http_request: Request,
+    cognito: CognitoAuthService = Depends(get_cognito_service),
+    db: Session = Depends(get_db)
 ):
     """
     Sign up a new user with phone number
@@ -272,6 +341,20 @@ async def phone_signup(
     result = cognito.phone_signup(
         phone_number=request.phone_number,
         name=request.name
+    )
+    
+    # Create user in database (will be updated on verification)
+    request_metadata = get_request_metadata(http_request)
+    user = UserService.create_user_from_cognito(
+        db=db,
+        cognito_data={
+            "sub": result['user_sub'],
+            "phone_number": result['phone_number'],
+            "name": result['name'],
+            "phone_number_verified": False,
+            "username": result['phone_number']
+        },
+        request_metadata=request_metadata
     )
     
     return {
@@ -377,7 +460,9 @@ async def phone_login(
 )
 async def phone_login_verify(
     request: PhoneLoginVerifyRequest,
-    cognito: CognitoAuthService = Depends(get_cognito_service)
+    http_request: Request,
+    cognito: CognitoAuthService = Depends(get_cognito_service),
+    db: Session = Depends(get_db)
 ):
     """
     Verify OTP and complete login
@@ -392,6 +477,15 @@ async def phone_login_verify(
         phone_number=request.phone_number,
         session=request.session,
         otp_code=request.otp_code
+    )
+    
+    # Get user info and update database
+    user_info = cognito.get_user_info(access_token=result['access_token'])
+    request_metadata = get_request_metadata(http_request)
+    user = UserService.create_user_from_cognito(
+        db=db,
+        cognito_data=user_info,
+        request_metadata=request_metadata
     )
     
     return AuthResponse(

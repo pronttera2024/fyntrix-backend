@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from .routers import market, agents, strategy, memory, news, chat, chart, zerodha_auth, zerodha_data, notifications, cache, websocket, performance, analytics, scalping, watchlist, auth
 from .routers import trading
 from .routers import support
+from .routers import user_preferences, user_watchlist
 from .services.cache import clear_memory_cache
 from .services.token_monitor import start_token_monitoring, stop_token_monitoring
 from .services.index_universe_monitor import start_index_universe_monitoring, stop_index_universe_monitoring
@@ -178,3 +179,5 @@ app.include_router(performance.router)
 app.include_router(analytics.router)
 app.include_router(scalping.router)
 app.include_router(watchlist.router, prefix="/v1")
+app.include_router(user_preferences.router, prefix="/v1")
+app.include_router(user_watchlist.router, prefix="/v1")

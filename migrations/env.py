@@ -12,14 +12,20 @@ if BASE_DIR_STR in sys.path:
     sys.path.remove(BASE_DIR_STR)
 sys.path.insert(0, BASE_DIR_STR)
 
-from app.db import Base  # type: ignore
+# Load .env file before importing app modules
+from dotenv import load_dotenv
+env_path = BASE_DIR / '.env'
+load_dotenv(dotenv_path=env_path, override=True)
+
+from app.config.database import Base  # type: ignore
 import app.db_models.trading  # noqa: F401
+from app.models import User  # noqa: F401
 
 config = context.config
 
-# Allow overriding DB URL via environment so local dev can start with SQLite
-# and later switch to Postgres/RDS without modifying alembic.ini.
-_env_db_url = os.getenv("ARISE_DATABASE_URL") or os.getenv("DATABASE_URL")
+# Load DATABASE_URL from environment (now loaded from .env via dotenv)
+# Priority: DATABASE_URL > ARISE_DATABASE_URL > alembic.ini default
+_env_db_url = os.getenv("DATABASE_URL") or os.getenv("ARISE_DATABASE_URL")
 if _env_db_url:
     config.set_main_option("sqlalchemy.url", _env_db_url)
 
