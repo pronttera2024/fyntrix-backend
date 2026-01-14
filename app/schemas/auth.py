@@ -142,3 +142,18 @@ class PhoneUserResponse(BaseModel):
     phone_number: str = Field(..., description="User phone number")
     name: str = Field(..., description="User full name")
     phone_number_verified: bool = Field(..., description="Phone verification status")
+
+
+class GoogleAuthRequest(BaseModel):
+    """Google OAuth authentication request"""
+    token: str = Field(..., description="Google ID token from frontend")
+    
+    
+class GoogleAuthResponse(BaseModel):
+    """Google OAuth authentication response"""
+    access_token: str = Field(..., description="JWT access token")
+    id_token: str = Field(..., description="JWT ID token")
+    refresh_token: str = Field(..., description="Refresh token")
+    expires_in: int = Field(..., description="Token expiration time in seconds")
+    token_type: str = Field(default="Bearer", description="Token type")
+    user: UserResponse = Field(..., description="User information")

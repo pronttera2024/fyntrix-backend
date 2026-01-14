@@ -18,9 +18,12 @@ from ..schemas.auth import (
     PhoneLoginRequest,
     PhoneLoginVerifyRequest,
     PhoneResendOTPRequest,
-    PhoneUserResponse
+    PhoneUserResponse,
+    GoogleAuthRequest,
+    GoogleAuthResponse
 )
 from ..services.cognito_auth import get_cognito_service, CognitoAuthService
+from ..services.google_auth import get_google_auth_service, GoogleAuthService
 from ..services.user_service import UserService
 from ..config.database import get_db
 
@@ -568,4 +571,122 @@ async def phone_login_verify(
         refresh_token=result['refresh_token'],
         expires_in=result['expires_in'],
         token_type=result['token_type']
+    )
+
+
+@router.post(
+    "/google",
+    response_model=GoogleAuthResponse,
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {"description": "Successfully authenticated with Google"},
+        401: {"model": ErrorResponse, "description": "Invalid Google token"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Authenticate with Google OAuth",
+    description="""
+    Authenticate a user using Google OAuth.
+    
+    **Flow:**
+    1. Frontend obtains Google ID token using Google Sign-In
+    2. Frontend sends the token to this endpoint
+    3. Backend verifies the token with Google
+    4. Backend creates/updates user in database
+    5. Backend returns JWT tokens for API authorization
+    
+    **Note:** This endpoint handles both new user registration and existing user login.
+    """
+)
+async def google_auth(
+    request: GoogleAuthRequest,
+    http_request: Request,
+    google_service: GoogleAuthService = Depends(get_google_auth_service),
+    db: Session = Depends(get_db)
+):
+    """
+    Authenticate with Google OAuth
+    
+    - **token**: Google ID token from frontend
+    
+    Returns authentication tokens and user information.
+    """
+    from datetime import datetime, timedelta
+    from jose import jwt
+    import os
+    
+    # Verify Google token and get user info
+    google_user = google_service.verify_google_token(request.token)
+    
+    # Create/update user in database
+    request_metadata = get_request_metadata(http_request)
+    user = UserService.create_user_from_cognito(
+        db=db,
+        cognito_data={
+            "sub": google_user['google_id'],
+            "email": google_user['email'],
+            "name": google_user['name'],
+            "email_verified": google_user['email_verified'],
+            "username": google_user['email'],
+            "picture": google_user.get('picture', ''),
+            "auth_provider": "google"
+        },
+        request_metadata=request_metadata
+    )
+    
+    # Generate JWT tokens directly (not using Cognito for Google users)
+    secret_key = os.getenv('JWT_SECRET_KEY', 'your-secret-key-change-in-production')
+    algorithm = 'HS256'
+    access_token_expire = timedelta(hours=1)
+    refresh_token_expire = timedelta(days=30)
+    
+    # Create access token
+    access_token_data = {
+        'sub': google_user['google_id'],
+        'email': google_user['email'],
+        'name': google_user['name'],
+        'email_verified': google_user['email_verified'],
+        'auth_provider': 'google',
+        'exp': datetime.utcnow() + access_token_expire,
+        'iat': datetime.utcnow(),
+        'token_type': 'access'
+    }
+    access_token = jwt.encode(access_token_data, secret_key, algorithm=algorithm)
+    
+    # Create ID token
+    id_token_data = {
+        'sub': google_user['google_id'],
+        'email': google_user['email'],
+        'name': google_user['name'],
+        'email_verified': google_user['email_verified'],
+        'picture': google_user.get('picture', ''),
+        'given_name': google_user.get('given_name', ''),
+        'family_name': google_user.get('family_name', ''),
+        'exp': datetime.utcnow() + access_token_expire,
+        'iat': datetime.utcnow(),
+        'token_type': 'id'
+    }
+    id_token = jwt.encode(id_token_data, secret_key, algorithm=algorithm)
+    
+    # Create refresh token
+    refresh_token_data = {
+        'sub': google_user['google_id'],
+        'email': google_user['email'],
+        'exp': datetime.utcnow() + refresh_token_expire,
+        'iat': datetime.utcnow(),
+        'token_type': 'refresh'
+    }
+    refresh_token = jwt.encode(refresh_token_data, secret_key, algorithm=algorithm)
+    
+    return GoogleAuthResponse(
+        access_token=access_token,
+        id_token=id_token,
+        refresh_token=refresh_token,
+        expires_in=int(access_token_expire.total_seconds()),
+        token_type='Bearer',
+        user=UserResponse(
+            user_id=google_user['google_id'],
+            email=google_user['email'],
+            name=google_user['name'],
+            email_verified=google_user['email_verified']
+        )
     )
