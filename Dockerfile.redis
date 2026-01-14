@@ -1,0 +1,5 @@
+# Redis Dockerfile for Render.com
+FROM redis:7-alpine
+
+# Set memory limit and eviction policy
+CMD ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]

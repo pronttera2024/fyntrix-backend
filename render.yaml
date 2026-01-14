@@ -1,4 +1,17 @@
 services:
+  # Redis Cache Service (Private - in-memory only)
+  - type: pserv
+    name: fyntrix-redis
+    env: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./Dockerfile.redis
+    dockerContext: .
+    disk:
+      name: redis-data
+      mountPath: /data
+      sizeGB: 1
+
   # Backend API Service
   - type: web
     name: fyntrix-backend
@@ -15,7 +28,21 @@ services:
         value: False
       - key: LOG_LEVEL
         value: INFO
+      # Redis Configuration (connects to private Redis service)
+      - key: REDIS_HOST
+        value: fyntrix-redis
+      - key: REDIS_PORT
+        value: 6379
+      - key: REDIS_DB
+        value: 0
+      - key: REDIS_PASSWORD
+        value: ""
       # Add your API keys in Render dashboard as secret environment variables:
+      # - DATABASE_URL
+      # - AWS_COGNITO_REGION
+      # - AWS_COGNITO_USER_POOL_ID
+      # - AWS_COGNITO_CLIENT_ID
+      # - AWS_COGNITO_CLIENT_SECRET
       # - OPENAI_API_KEY
       # - FINNHUB_API_KEY
       # - ALPHA_VANTAGE_API_KEY

@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from ..deps import get_db
 from ..security import TokenPayload, decode_token
-from ..db_models.trading import BrokerConnection, BrokerOrder, BrokerToken, PortfolioSnapshot, TradeIntent
+from ..db_models.trading import BrokerConnection, BrokerOrder, BrokerToken, BrokerPortfolioSnapshot, TradeIntent
 from ..services.broker_adapters import get_broker_adapter
 from ..services.brokers_zerodha import ZerodhaBroker
 from ..services.crypto_vault import decrypt_text, encrypt_text
@@ -429,35 +429,33 @@ async def refresh_portfolio(
 
         for kind in ("POSITIONS", "HOLDINGS"):
             (
-                db.query(PortfolioSnapshot)
+                db.query(BrokerPortfolioSnapshot)
                 .filter(
-                    PortfolioSnapshot.account_id == resolved_account_id,
-                    PortfolioSnapshot.broker == adapter.name,
-                    PortfolioSnapshot.kind == kind,
-                    PortfolioSnapshot.is_latest == True,
+                    BrokerPortfolioSnapshot.account_id == resolved_account_id,
+                    BrokerPortfolioSnapshot.broker == adapter.name,
+                    BrokerPortfolioSnapshot.kind == kind,
+                    BrokerPortfolioSnapshot.is_latest == True,
                 )
                 .update({"is_latest": False})
             )
 
         now = datetime.utcnow()
         db.add(
-            PortfolioSnapshot(
+            BrokerPortfolioSnapshot(
                 account_id=resolved_account_id,
                 broker=adapter.name,
                 kind="POSITIONS",
                 as_of=now,
                 payload=json.dumps(positions),
-                is_latest=True,
             )
         )
         db.add(
-            PortfolioSnapshot(
+            BrokerPortfolioSnapshot(
                 account_id=resolved_account_id,
                 broker=adapter.name,
                 kind="HOLDINGS",
                 as_of=now,
                 payload=json.dumps(holdings),
-                is_latest=True,
             )
         )
         db.commit()

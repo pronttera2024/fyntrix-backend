@@ -137,8 +137,8 @@ class BrokerOrder(Base):
     updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
 
-class PortfolioSnapshot(Base):
-    __tablename__ = "portfolio_snapshots"
+class BrokerPortfolioSnapshot(Base):
+    __tablename__ = "broker_portfolio_snapshots"
 
     id = Column(String(36), primary_key=True, default=_uuid_str)
     account_id = Column(String(128), index=True, nullable=False)
