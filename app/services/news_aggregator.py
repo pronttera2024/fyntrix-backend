@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup
 # Note: Using 'html.parser' instead of 'lxml' to avoid C++ build dependency on Windows
-from .cache import get_cached
+from .cache_redis import get_cached
 
 # API Keys
 FMP_API_KEY = (os.environ.get("FMP_API_KEY", "") or "").strip() or None

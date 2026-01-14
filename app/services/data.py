@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 from datetime import datetime, timedelta
 import asyncio
 import httpx
-from .cache import get_cached
+from .cache_redis import get_cached
 from ..providers import get_data_provider
 
 Y_SYMBOLS = {

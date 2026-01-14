@@ -13,7 +13,7 @@ from .routers import market, agents, strategy, memory, news, chat, chart, zerodh
 from .routers import trading
 from .routers import support
 from .routers import user_preferences, user_watchlist
-from .services.cache import clear_memory_cache
+from .services.cache_redis import clear_memory_cache
 from .services.token_monitor import start_token_monitoring, stop_token_monitoring
 from .services.index_universe_monitor import start_index_universe_monitoring, stop_index_universe_monitoring
 from .services.top_picks_scheduler import start_top_picks_scheduler, stop_top_picks_scheduler, warm_top_picks

@@ -11,7 +11,7 @@ from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, timedelta
 import pandas as pd
 from pathlib import Path
-from .cache import get_cached
+from .cache_redis import get_cached
 from .zerodha_service import ZerodhaService
 
 # Load .env file

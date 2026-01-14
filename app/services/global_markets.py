@@ -7,7 +7,7 @@ import os
 from typing import Any, Dict, List
 from datetime import datetime
 import httpx
-from .cache import get_cached
+from .cache_redis import get_cached
 
 # API Keys
 FMP_API_KEY = os.environ.get("FMP_API_KEY", "1oFKhKppawnk4ndt7wvCqNGXKNPllw1n")
