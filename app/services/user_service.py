@@ -178,3 +178,41 @@ class UserService:
         if user:
             user.last_login_at = datetime.utcnow()
             db.commit()
+    
+    @staticmethod
+    def delete_user_by_identifier(db: Session, identifier: str) -> dict:
+        """
+        Delete user from database by email or phone number (hard delete)
+        
+        Args:
+            db: Database session
+            identifier: Email address or phone number
+        
+        Returns:
+            Dictionary with deletion status
+        """
+        # Try to find user by email or phone
+        user = db.query(User).filter(
+            (User.email == identifier) | (User.phone_number == identifier)
+        ).first()
+        
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found in database"
+            )
+        
+        user_id = user.user_id
+        
+        # Hard delete from database
+        db.delete(user)
+        db.commit()
+        
+        logger.info(f"Deleted user {user_id} ({identifier}) from database")
+        
+        return {
+            'message': 'User deleted successfully from database',
+            'user_id': user_id,
+            'identifier': identifier,
+            'deleted': True
+        }

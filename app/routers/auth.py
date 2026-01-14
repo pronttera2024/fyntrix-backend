@@ -20,7 +20,8 @@ from ..schemas.auth import (
     PhoneResendOTPRequest,
     PhoneUserResponse,
     GoogleAuthRequest,
-    GoogleAuthResponse
+    GoogleAuthResponse,
+    DeleteUserRequest
 )
 from ..services.cognito_auth import get_cognito_service, CognitoAuthService
 from ..services.google_auth import get_google_auth_service, GoogleAuthService
@@ -690,3 +691,93 @@ async def google_auth(
             email_verified=google_user['email_verified']
         )
     )
+
+
+@router.delete(
+    "/user",
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {"description": "User deleted successfully from all systems"},
+        404: {"model": ErrorResponse, "description": "User not found"},
+        500: {"model": ErrorResponse, "description": "Internal server error"}
+    },
+    summary="Delete user account",
+    description="""
+    Delete a user account from all systems (Cognito and Database).
+    
+    **This is a destructive operation that:**
+    - Removes user from AWS Cognito (SSO)
+    - Deletes user from the database (hard delete)
+    - Cannot be undone
+    
+    **Usage:**
+    - Provide either email address or phone number (E.164 format)
+    - User will be deleted from both Cognito and database
+    - If user exists in only one system, partial deletion will occur
+    
+    **Note:** This endpoint is typically used for:
+    - User account deletion requests (GDPR compliance)
+    - Testing/development cleanup
+    - Administrative user management
+    """
+)
+async def delete_user(
+    request: DeleteUserRequest,
+    cognito: CognitoAuthService = Depends(get_cognito_service),
+    db: Session = Depends(get_db)
+):
+    """
+    Delete user from all systems
+    
+    - **identifier**: Email address or phone number (E.164 format)
+    
+    Returns deletion status from both Cognito and database.
+    """
+    results = {
+        'identifier': request.identifier,
+        'cognito_deleted': False,
+        'database_deleted': False,
+        'errors': []
+    }
+    
+    # Try to delete from Cognito
+    try:
+        cognito_result = cognito.delete_user(request.identifier)
+        results['cognito_deleted'] = True
+        results['cognito_message'] = cognito_result['message']
+    except HTTPException as e:
+        if e.status_code == status.HTTP_404_NOT_FOUND:
+            results['errors'].append('User not found in Cognito')
+        else:
+            results['errors'].append(f'Cognito deletion failed: {e.detail}')
+    except Exception as e:
+        results['errors'].append(f'Cognito deletion error: {str(e)}')
+    
+    # Try to delete from database
+    try:
+        db_result = UserService.delete_user_by_identifier(db, request.identifier)
+        results['database_deleted'] = True
+        results['database_message'] = db_result['message']
+        results['user_id'] = db_result['user_id']
+    except HTTPException as e:
+        if e.status_code == status.HTTP_404_NOT_FOUND:
+            results['errors'].append('User not found in database')
+        else:
+            results['errors'].append(f'Database deletion failed: {e.detail}')
+    except Exception as e:
+        results['errors'].append(f'Database deletion error: {str(e)}')
+    
+    # Determine overall status
+    if results['cognito_deleted'] or results['database_deleted']:
+        results['message'] = 'User deleted successfully'
+        results['success'] = True
+        return results
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={
+                'message': 'User not found in any system',
+                'identifier': request.identifier,
+                'errors': results['errors']
+            }
+        )

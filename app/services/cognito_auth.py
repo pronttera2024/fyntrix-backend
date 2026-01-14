@@ -278,36 +278,55 @@ class CognitoAuthService:
                 ConfirmationCode=otp_code
             )
             
-            # Automatically login the user after successful verification
-            # Use phone login flow to get auth tokens
-            auth_result = self.phone_login_initiate(phone_number)
-            session = auth_result['session']
-            
-            # Complete the login with the same OTP (or initiate new one if needed)
-            # For seamless UX, we'll use admin API to get tokens directly
+            # After successful verification, initiate login to get tokens
+            # This sends a new OTP, but we'll immediately verify with the same code
             try:
-                auth_response = self.client.admin_initiate_auth(
-                    UserPoolId=self.user_pool_id,
+                # Initiate CUSTOM_AUTH flow
+                auth_response = self.client.initiate_auth(
                     ClientId=self.client_id,
-                    AuthFlow='ADMIN_NO_SRP_AUTH',
+                    AuthFlow='CUSTOM_AUTH',
                     AuthParameters={
                         'USERNAME': phone_number,
                         'SECRET_HASH': secret_hash
                     }
                 )
                 
+                # If we get a CUSTOM_CHALLENGE, respond with the OTP
+                if auth_response.get('ChallengeName') == 'CUSTOM_CHALLENGE':
+                    challenge_response = self.client.respond_to_auth_challenge(
+                        ClientId=self.client_id,
+                        ChallengeName='CUSTOM_CHALLENGE',
+                        Session=auth_response['Session'],
+                        ChallengeResponses={
+                            'USERNAME': phone_number,
+                            'ANSWER': otp_code,
+                            'SECRET_HASH': secret_hash
+                        }
+                    )
+                    
+                    if 'AuthenticationResult' in challenge_response:
+                        auth_result = challenge_response['AuthenticationResult']
+                        return {
+                            'message': 'Phone number verified successfully',
+                            'phone_number': phone_number,
+                            'verified': True,
+                            'access_token': auth_result['AccessToken'],
+                            'id_token': auth_result['IdToken'],
+                            'refresh_token': auth_result['RefreshToken'],
+                            'expires_in': auth_result['ExpiresIn'],
+                            'token_type': 'Bearer'
+                        }
+                
+                # If no tokens, return success but no auth
                 return {
-                    'message': 'Phone number verified successfully',
+                    'message': 'Phone number verified successfully. Please login to get tokens.',
                     'phone_number': phone_number,
-                    'verified': True,
-                    'access_token': auth_response['AuthenticationResult']['AccessToken'],
-                    'id_token': auth_response['AuthenticationResult']['IdToken'],
-                    'refresh_token': auth_response['AuthenticationResult']['RefreshToken'],
-                    'expires_in': auth_response['AuthenticationResult']['ExpiresIn'],
-                    'token_type': auth_response['AuthenticationResult']['TokenType']
+                    'verified': True
                 }
-            except ClientError:
-                # If admin auth fails, return without tokens but verification succeeded
+                
+            except ClientError as login_error:
+                # Verification succeeded but login failed - still return success
+                # User can login separately
                 return {
                     'message': 'Phone number verified successfully. Please login to get tokens.',
                     'phone_number': phone_number,
@@ -541,6 +560,44 @@ class CognitoAuthService:
         chars = string.ascii_letters + string.digits + "!@#$%^&*"
         password = ''.join(secrets.choice(chars) for _ in range(16))
         return password + "A1!"
+    
+    def delete_user(self, identifier: str) -> Dict:
+        """
+        Delete a user from Cognito by email or phone number
+        
+        Args:
+            identifier: Email address or phone number (E.164 format)
+        
+        Returns:
+            Dictionary with deletion status
+        """
+        try:
+            # Delete user using admin API
+            self.client.admin_delete_user(
+                UserPoolId=self.user_pool_id,
+                Username=identifier
+            )
+            
+            return {
+                'message': 'User deleted successfully from Cognito',
+                'identifier': identifier,
+                'deleted': True
+            }
+            
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            
+            if error_code == 'UserNotFoundException':
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="User not found in Cognito"
+                )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Failed to delete user from Cognito: {error_message}"
+                )
 
 
 # Singleton instance

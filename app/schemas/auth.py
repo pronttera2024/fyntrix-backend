@@ -157,3 +157,15 @@ class GoogleAuthResponse(BaseModel):
     expires_in: int = Field(..., description="Token expiration time in seconds")
     token_type: str = Field(default="Bearer", description="Token type")
     user: UserResponse = Field(..., description="User information")
+
+
+class DeleteUserRequest(BaseModel):
+    """Delete user request"""
+    identifier: str = Field(..., description="Email address or phone number (E.164 format) of user to delete")
+    
+    @validator('identifier')
+    def validate_identifier(cls, v):
+        """Validate identifier is either email or phone number"""
+        if not v.strip():
+            raise ValueError('Identifier cannot be empty')
+        return v.strip()
