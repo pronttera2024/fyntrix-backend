@@ -366,38 +366,66 @@ async def phone_signup(
 
 @router.post(
     "/phone/verify-signup",
+    response_model=AuthResponse,
     status_code=status.HTTP_200_OK,
     responses={
-        200: {"description": "Phone number verified successfully"},
+        200: {"description": "Phone number verified and authenticated successfully"},
         400: {"model": ErrorResponse, "description": "Invalid or expired OTP"},
         401: {"model": ErrorResponse, "description": "User already confirmed"},
         500: {"model": ErrorResponse, "description": "Internal server error"}
     },
-    summary="Verify phone number with OTP",
+    summary="Verify phone number with OTP and get auth tokens",
     description="""
     Verify phone number with OTP code received via SMS.
     
-    After successful verification, user can login using /phone/login endpoint.
+    After successful verification, automatically logs in the user and returns JWT tokens
+    (access_token, id_token, refresh_token) for API authorization.
+    
+    This matches the behavior of email signup where tokens are returned immediately.
     """
 )
 async def phone_verify_signup(
     request: PhoneVerifyOTPRequest,
-    cognito: CognitoAuthService = Depends(get_cognito_service)
+    http_request: Request,
+    cognito: CognitoAuthService = Depends(get_cognito_service),
+    db: Session = Depends(get_db)
 ):
     """
-    Verify phone number with OTP
+    Verify phone number with OTP and get authentication tokens
     
     - **phone_number**: Phone number in E.164 format
     - **otp_code**: 6-digit OTP code received via SMS
     
-    Returns verification confirmation.
+    Returns authentication tokens after successful verification.
     """
     result = cognito.phone_verify_signup(
         phone_number=request.phone_number,
         otp_code=request.otp_code
     )
     
-    return result
+    # If tokens are returned, update user in database
+    if 'access_token' in result:
+        user_info = cognito.get_user_info(access_token=result['access_token'])
+        request_metadata = get_request_metadata(http_request)
+        user = UserService.create_user_from_cognito(
+            db=db,
+            cognito_data=user_info,
+            request_metadata=request_metadata
+        )
+        
+        return AuthResponse(
+            access_token=result['access_token'],
+            id_token=result['id_token'],
+            refresh_token=result['refresh_token'],
+            expires_in=result['expires_in'],
+            token_type=result['token_type']
+        )
+    else:
+        # Fallback: verification succeeded but no tokens (shouldn't happen normally)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Verification succeeded but failed to generate tokens. Please login manually."
+        )
 
 
 @router.post(

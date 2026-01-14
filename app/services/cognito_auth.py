@@ -265,10 +265,12 @@ class CognitoAuthService:
     def phone_verify_signup(self, phone_number: str, otp_code: str) -> Dict:
         """
         Verify phone number with OTP code during signup
+        After verification, automatically logs in the user and returns auth tokens
         """
         try:
             secret_hash = self._get_secret_hash(phone_number)
             
+            # Confirm the signup with OTP
             self.client.confirm_sign_up(
                 ClientId=self.client_id,
                 SecretHash=secret_hash,
@@ -276,11 +278,41 @@ class CognitoAuthService:
                 ConfirmationCode=otp_code
             )
             
-            return {
-                'message': 'Phone number verified successfully. You can now login.',
-                'phone_number': phone_number,
-                'verified': True
-            }
+            # Automatically login the user after successful verification
+            # Use phone login flow to get auth tokens
+            auth_result = self.phone_login_initiate(phone_number)
+            session = auth_result['session']
+            
+            # Complete the login with the same OTP (or initiate new one if needed)
+            # For seamless UX, we'll use admin API to get tokens directly
+            try:
+                auth_response = self.client.admin_initiate_auth(
+                    UserPoolId=self.user_pool_id,
+                    ClientId=self.client_id,
+                    AuthFlow='ADMIN_NO_SRP_AUTH',
+                    AuthParameters={
+                        'USERNAME': phone_number,
+                        'SECRET_HASH': secret_hash
+                    }
+                )
+                
+                return {
+                    'message': 'Phone number verified successfully',
+                    'phone_number': phone_number,
+                    'verified': True,
+                    'access_token': auth_response['AuthenticationResult']['AccessToken'],
+                    'id_token': auth_response['AuthenticationResult']['IdToken'],
+                    'refresh_token': auth_response['AuthenticationResult']['RefreshToken'],
+                    'expires_in': auth_response['AuthenticationResult']['ExpiresIn'],
+                    'token_type': auth_response['AuthenticationResult']['TokenType']
+                }
+            except ClientError:
+                # If admin auth fails, return without tokens but verification succeeded
+                return {
+                    'message': 'Phone number verified successfully. Please login to get tokens.',
+                    'phone_number': phone_number,
+                    'verified': True
+                }
             
         except ClientError as e:
             error_code = e.response['Error']['Code']
