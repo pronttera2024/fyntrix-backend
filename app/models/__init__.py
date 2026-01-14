@@ -14,20 +14,27 @@ from .analytics import (
     AgentAnalysis,
     AgentLearning,
 )
+from .monitoring import (
+    DashboardPerformance,
+    PortfolioSnapshot,
+    TopPicksPositionSnapshot,
+)
 
 __all__ = [
     "User",
+    "StrategyProfile",
     "UserPreferences",
     "UserWatchlist",
     "PickEvent",
     "PickAgentContribution",
     "PickOutcome",
     "RlPolicy",
-    "StrategyProfile",
-    "StrategyAdvisory",
     "LLMRequest",
     "AIRecommendation",
     "TopPicksRun",
     "AgentAnalysis",
     "AgentLearning",
+    "DashboardPerformance",
+    "PortfolioSnapshot",
+    "TopPicksPositionSnapshot",
 ]
