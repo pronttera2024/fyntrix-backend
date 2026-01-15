@@ -27,6 +27,18 @@ services:
       retries: 3
       start_period: 40s
 
+  # Redis Commander - Web-based Redis GUI
+  # Access at http://localhost:8081
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:host.docker.internal:6379
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    depends_on:
+      - app
+
   # Alternative: Separate Redis service (comment out if using Redis in app container)
   # redis:
   #   image: redis:7-alpine
