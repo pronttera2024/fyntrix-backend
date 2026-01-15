@@ -6,6 +6,7 @@ Fetches current prices and intraday movements for stocks
 import logging
 from typing import Dict, List, Optional
 from ..providers import get_data_provider
+from ..utils.json_encoder import convert_numpy_types
 
 logger = logging.getLogger(__name__)
 
@@ -79,15 +80,15 @@ async def enrich_picks_with_realtime_data(picks: List[Dict]) -> List[Dict]:
                 except Exception:
                     intraday_change_pct = 0.0
                 
-                # Add to pick
-                pick['last_price'] = round(last_price, 2)
-                pick['current_price'] = round(last_price, 2)
-                pick['prev_close'] = round(prev_close, 2)
-                pick['intraday_change_pct'] = round(intraday_change_pct, 2)
-                pick['open'] = round(open_price, 2)
-                pick['high'] = round(high_price, 2)
-                pick['low'] = round(low_price, 2)
-                pick['volume'] = volume
+                # Add to pick - convert to native Python types to avoid numpy serialization issues
+                pick['last_price'] = float(round(last_price, 2))
+                pick['current_price'] = float(round(last_price, 2))
+                pick['prev_close'] = float(round(prev_close, 2))
+                pick['intraday_change_pct'] = float(round(intraday_change_pct, 2))
+                pick['open'] = float(round(open_price, 2))
+                pick['high'] = float(round(high_price, 2))
+                pick['low'] = float(round(low_price, 2))
+                pick['volume'] = int(volume) if volume else 0
 
                 # Normalise data source label (Zerodha vs Yahoo Finance)
                 try:

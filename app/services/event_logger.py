@@ -5,6 +5,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
+from app.utils.json_encoder import safe_json_dumps, convert_numpy_types
 
 
 # Base directory: repo_root/data/events/{event_type}/YYYY/MM/DD/events.jsonl
@@ -60,7 +61,9 @@ def _writer() -> None:
             day_dir.mkdir(parents=True, exist_ok=True)
             file_path = day_dir / "events.jsonl"
             with open(file_path, "a", encoding="utf-8") as f:
-                f.write(json.dumps(event, separators=(",", ":")) + "\n")
+                # Convert numpy/pandas types before serialization
+                safe_event = convert_numpy_types(event)
+                f.write(safe_json_dumps(safe_event, separators=(",", ":")) + "\n")
         except Exception as e:
             try:
                 print(f"[event_logger] write failed: {e}")

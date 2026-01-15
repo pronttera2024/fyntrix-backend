@@ -202,7 +202,7 @@ class UserService:
                 detail="User not found in database"
             )
         
-        user_id = user.user_id
+        user_id = user.id
         
         # Hard delete from database
         db.delete(user)

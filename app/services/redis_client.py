@@ -3,6 +3,7 @@ import json
 import logging
 from typing import Any, Optional
 import uuid
+from app.utils.json_encoder import safe_json_dumps, convert_numpy_types
 
 logger = logging.getLogger(__name__)
 
@@ -26,13 +27,25 @@ def get_redis_client():
         _redis_client = None
         return None
 
-    url = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
+    # Try REDIS_URL first, then construct from individual vars
+    url = os.getenv("REDIS_URL")
+    if not url:
+        host = os.getenv("REDIS_HOST", "127.0.0.1")
+        port = os.getenv("REDIS_PORT", "6379")
+        db = os.getenv("REDIS_DB", "0")
+        password = os.getenv("REDIS_PASSWORD", "")
+        
+        if password:
+            url = f"redis://:{password}@{host}:{port}/{db}"
+        else:
+            url = f"redis://{host}:{port}/{db}"
+    
     try:
-        client = redis.Redis.from_url(url)
+        client = redis.Redis.from_url(url, socket_connect_timeout=5, socket_timeout=5)
         # Lightweight health check
         client.ping()
         _redis_client = client
-        logger.info("Connected to Redis at %s", url)
+        logger.info("Connected to Redis at %s", url.replace(os.getenv('REDIS_PASSWORD', ''), '***') if os.getenv('REDIS_PASSWORD') else url)
     except Exception as e:
         logger.warning("Could not connect to Redis at %s: %s", url, e)
         _redis_client = None
@@ -46,7 +59,9 @@ def set_json(key: str, value: Any, ex: Optional[int] = None) -> None:
     if not client:
         return
     try:
-        payload = json.dumps(value)
+        # Convert numpy/pandas types before serialization
+        safe_value = convert_numpy_types(value)
+        payload = safe_json_dumps(safe_value)
         client.set(key, payload, ex=ex)
     except Exception as e:
         logger.warning("Redis set_json failed for %s: %s", key, e)

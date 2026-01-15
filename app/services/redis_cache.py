@@ -8,6 +8,7 @@ from typing import Any, Optional, List, Dict
 from datetime import datetime, timedelta
 import redis
 from app.config.redis_config import get_redis_client
+from app.utils.json_encoder import safe_json_dumps, convert_numpy_types
 
 
 class RedisCache:
@@ -50,7 +51,9 @@ class RedisCache:
         """
         try:
             namespaced_key = self._make_key(key)
-            serialized = json.dumps(value)
+            # Convert numpy/pandas types before serialization
+            safe_value = convert_numpy_types(value)
+            serialized = safe_json_dumps(safe_value)
             
             if ttl:
                 return self.redis.setex(namespaced_key, ttl, serialized)
@@ -125,7 +128,9 @@ class RedisCache:
         """Set hash field"""
         try:
             namespaced_key = self._make_key(key)
-            serialized = json.dumps(value)
+            # Convert numpy/pandas types before serialization
+            safe_value = convert_numpy_types(value)
+            serialized = safe_json_dumps(safe_value)
             return self.redis.hset(namespaced_key, field, serialized) >= 0
         except Exception as e:
             print(f"Redis hset error: {e}")
@@ -197,8 +202,8 @@ class RedisCache:
         """
         try:
             namespaced_key = self._make_key(key)
-            # Serialize members
-            serialized_mapping = {json.dumps(k): v for k, v in mapping.items()}
+            # Serialize members with safe encoder
+            serialized_mapping = {safe_json_dumps(convert_numpy_types(k)): v for k, v in mapping.items()}
             return self.redis.zadd(namespaced_key, serialized_mapping, nx=nx)
         except Exception as e:
             print(f"Redis zadd error: {e}")
@@ -240,7 +245,8 @@ class RedisCache:
         """Remove members from sorted set"""
         try:
             namespaced_key = self._make_key(key)
-            serialized_members = [json.dumps(m) for m in members]
+            # Convert numpy/pandas types before serialization
+            serialized_members = [safe_json_dumps(convert_numpy_types(m)) for m in members]
             return self.redis.zrem(namespaced_key, *serialized_members)
         except Exception as e:
             print(f"Redis zrem error: {e}")
@@ -261,7 +267,8 @@ class RedisCache:
         """Push values to list head"""
         try:
             namespaced_key = self._make_key(key)
-            serialized = [json.dumps(v) for v in values]
+            # Convert numpy/pandas types before serialization
+            serialized = [safe_json_dumps(convert_numpy_types(v)) for v in values]
             return self.redis.lpush(namespaced_key, *serialized)
         except Exception as e:
             print(f"Redis lpush error: {e}")
@@ -271,7 +278,8 @@ class RedisCache:
         """Push values to list tail"""
         try:
             namespaced_key = self._make_key(key)
-            serialized = [json.dumps(v) for v in values]
+            # Convert numpy/pandas types before serialization
+            serialized = [safe_json_dumps(convert_numpy_types(v)) for v in values]
             return self.redis.rpush(namespaced_key, *serialized)
         except Exception as e:
             print(f"Redis rpush error: {e}")

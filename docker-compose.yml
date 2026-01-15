@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Main application with Redis inside the same container
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./fyntrix_local.db}
+      - PYTHONPATH=/app
+    volumes:
+      # Mount data directory for persistence
+      - ./data:/app/data
+      - ./cache:/app/cache
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Alternative: Separate Redis service (comment out if using Redis in app container)
+  # redis:
+  #   image: redis:7-alpine
+  #   command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 3s
+  #     retries: 3
+
+# volumes:
+#   redis_data:
