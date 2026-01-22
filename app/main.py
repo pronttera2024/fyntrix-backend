@@ -52,18 +52,18 @@ async def lifespan(app: FastAPI):
         ENV_FINGERPRINT,
     )
     # TEMPORARILY DISABLED - Schedulers commented out for deployment testing
-    # await start_token_monitoring()
-    # await start_index_universe_monitoring()
-    # await start_top_picks_scheduler()
-    # try:
-    #     asyncio.create_task(warm_top_picks())
-    # except Exception as e:
-    #     logging.getLogger(__name__).warning("Failed to warm Top Picks on startup: %s", e)
-    # await start_scalping_monitor()  # Start scalping auto-monitor (every 5 mins)
-    # await start_dashboard_scheduler()  # Start dashboard/overview worker
-    # await start_portfolio_monitor()  # Start portfolio monitor worker
-    # await start_top_picks_positions_monitor()  # Start Top Picks positions monitor
-    # await start_rl_scheduler()  # Start nightly RL scheduler (16:30 IST, Mon-Fri)
+    await start_token_monitoring()
+    await start_index_universe_monitoring()
+    await start_top_picks_scheduler()
+    try:
+        asyncio.create_task(warm_top_picks())
+    except Exception as e:
+        logging.getLogger(__name__).warning("Failed to warm Top Picks on startup: %s", e)
+    await start_scalping_monitor()  # Start scalping auto-monitor (every 5 mins)
+    await start_dashboard_scheduler()  # Start dashboard/overview worker
+    await start_portfolio_monitor()  # Start portfolio monitor worker
+    await start_top_picks_positions_monitor()  # Start Top Picks positions monitor
+    await start_rl_scheduler()  # Start nightly RL scheduler (16:30 IST, Mon-Fri)
     
     # Start WebSocket service if Zerodha is authenticated
     try:
@@ -79,14 +79,14 @@ async def lifespan(app: FastAPI):
     yield
     
     # Shutdown - TEMPORARILY DISABLED (matching disabled startup)
-    # stop_token_monitoring()
-    # stop_index_universe_monitoring()
-    # stop_top_picks_scheduler()
-    # stop_scalping_monitor()  # Stop scalping monitor
-    # stop_dashboard_scheduler()  # Stop dashboard worker
-    # stop_portfolio_monitor()  # Stop portfolio monitor worker
-    # stop_top_picks_positions_monitor()  # Stop Top Picks positions monitor
-    # stop_rl_scheduler()  # Stop nightly RL scheduler
+    stop_token_monitoring()
+    stop_index_universe_monitoring()
+    stop_top_picks_scheduler()
+    stop_scalping_monitor()  # Stop scalping monitor
+    stop_dashboard_scheduler()  # Stop dashboard worker
+    stop_portfolio_monitor()  # Stop portfolio monitor worker
+    stop_top_picks_positions_monitor()  # Stop Top Picks positions monitor
+    stop_rl_scheduler()  # Stop nightly RL scheduler
     
     # Stop WebSocket service
     try:

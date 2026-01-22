@@ -1,0 +1,62 @@
+[
+  {
+    "name": "PORT",
+    "value": "8000"
+  },
+  {
+    "name": "DATABASE_URL",
+    "value": "postgresql://fintrixAdmin:fintriX-2026@fyntrix-db.crqq2weawp2p.ap-south-1.rds.amazonaws.com:5432/postgres?sslmode=require"
+  },
+  {
+    "name": "REDIS_HOST",
+    "value": "127.0.0.1"
+  },
+  {
+    "name": "REDIS_PORT",
+    "value": "6379"
+  },
+  {
+    "name": "REDIS_DB",
+    "value": "0"
+  },
+  {
+    "name": "AWS_COGNITO_REGION",
+    "value": "ap-south-1"
+  },
+  {
+    "name": "AWS_COGNITO_USER_POOL_ID",
+    "value": "ap-south-1_k7eaenYhs"
+  },
+  {
+    "name": "AWS_COGNITO_CLIENT_ID",
+    "value": "avvfss72k8mt7hkhejtjnoea3"
+  },
+  {
+    "name": "AWS_COGNITO_CLIENT_SECRET",
+    "value": "3290ickpmgnoarlmmg3rtqa0npe4iuktsogskk1ouglndq209de"
+  },
+  {
+    "name": "AWS_ACCESS_KEY_ID",
+    "value": "YOUR_AWS_ACCESS_KEY_ID"
+  },
+  {
+    "name": "AWS_SECRET_ACCESS_KEY",
+    "value": "YOUR_AWS_SECRET_ACCESS_KEY"
+  },
+  {
+    "name": "GOOGLE_CLIENT_ID",
+    "value": "YOUR_GOOGLE_CLIENT_ID"
+  },
+  {
+    "name": "GOOGLE_CLIENT_SECRET",
+    "value": "YOUR_GOOGLE_CLIENT_SECRET"
+  },
+  {
+    "name": "ENV_NAME",
+    "value": "production"
+  },
+  {
+    "name": "PYTHONPATH",
+    "value": "/app"
+  }
+]

@@ -1,0 +1,35 @@
+# Fyntrix Production Environment Configuration
+# Copy this file to terraform.tfvars and fill in your values
+
+# General Configuration
+environment = "production"
+aws_region  = "ap-south-1"
+aws_profile = "fyntrix"
+
+# Networking
+vpc_cidr           = "10.0.0.0/16"
+availability_zones = ["ap-south-1a", "ap-south-1b"]
+
+# Database Configuration
+db_name           = "postgres"
+db_username       = "fintrixAdmin"
+db_password       = "fintriX-2026"  # CHANGE THIS IN PRODUCTION
+db_instance_class = "db.t3.micro"
+db_allocated_storage = 20
+
+# ECS Configuration
+container_cpu    = 1024
+container_memory = 3072
+desired_count    = 1
+ecs_instance_type = "t3.large"
+ec2_key_name     = "fyntrix-key"
+
+# Cognito & Authentication
+google_client_id     = "your-google-client-id.apps.googleusercontent.com"
+google_client_secret = "your-google-client-secret"
+
+# Domain & SSL
+domain_name            = "api.fyntrix.ai"
+certificate_arn        = ""  # Add your ACM certificate ARN
+route53_zone_id        = "Z0855289DANZGUB2HQ52"
+create_route53_record  = false  # Set to true to create DNS record
